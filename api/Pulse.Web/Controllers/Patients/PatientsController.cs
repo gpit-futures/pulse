@@ -38,6 +38,28 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(patient);
         }
 
+        [HttpGet("{patientId}/counts")]
+        public async Task<IActionResult> GetPatientCounts(string patientId)
+        {
+            var count = new
+            {
+                diagnosesCount = "",
+                diagnosesDate = "1970-01-01T00:00:00-05:00",
+                ordersCount = "",
+                ordersDate = "1970-01-01T00:00:00-05:00",
+                resultsCount = "",
+                resultsDate = "1970-01-01T00:00:00-05:00",
+                vitalsCount = 20,
+                vitalsDate = "2017-05-04T08:54:14.698-04:00",
+                source = "ethercis",
+                sourceId = "ethercis-counts"
+            };
+
+            var result = new[] { count };
+
+            return this.Ok(result);
+        }
+
         [HttpGet("{patientId}/clinicalnotes")]
         public async Task<IActionResult> GetPatientClinicalNotes(string patientId)
         {
