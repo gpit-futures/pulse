@@ -1,12 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Pulse.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/application")]
+    [Route("api")]
     public class ApplicationController : Controller
     {
-        [HttpGet]
+        [HttpGet("initialise")]
+        public IActionResult Initialise()
+        {
+            return this.Ok(new
+            {
+                mode = "demo",
+                ok = true,
+                version = "2.32.2"
+            });
+        }
+
+        [HttpGet("application")]
         public IActionResult GetApplicationInfo()
         {
             return this.Ok(new
@@ -16,6 +28,27 @@ namespace Pulse.Web.Controllers
                 themeColor = "default",
                 title = "Ripple Showcase Stack"
             });
+        }
+
+        [HttpGet("user")]
+        public IActionResult GetDefaultUser()
+        {
+            return this.Ok(new
+            {
+                email = "alex.mcnair@gmail.com",
+                family_name = "McNair",
+                given_name = "Alex",
+                role = "IDCR",
+                roles = new List<string> { "IDCR" },
+                sub = "28AD8576-1948-4C84-8B5E-55FB7EE027CE",
+                tenant = null as object
+            });
+        }
+
+        [HttpGet("logout")]
+        public IActionResult Logout()
+        {
+            return this.Ok();
         }
     }
 }
