@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Pulse.Infrastructure.EntryItems;
+using Pulse.Infrastructure.Patients;
 using Pulse.Web.Controllers.Patients.RequestModels;
 using Pulse.Web.Controllers.Patients.ResponseModels;
+using Pulse.Web.Extensions;
 
 namespace Pulse.Web.Controllers.Patients
 {
@@ -10,10 +14,29 @@ namespace Pulse.Web.Controllers.Patients
     [Route("api/patients")]
     public class PatientsController : Controller
     {
+        public PatientsController(IPatientRepository patients, 
+            IAllergyRepository allergies, 
+            IMedicationRepository medications, 
+            IDiagnosisRepository diagnoses)
+        {
+            this.Patients = patients;
+            this.Allergies = allergies;
+            this.Medications = medications;
+            this.Diagnoses = diagnoses;
+        }
+
+        private IPatientRepository Patients { get; }
+
+        private IAllergyRepository Allergies { get; }
+
+        private IMedicationRepository Medications { get; }
+
+        private IDiagnosisRepository Diagnoses { get; }
+
         [HttpGet]
         public async Task<IActionResult> GetPatients()
         {
-            var patients = new List<PatientResponse>();
+            var patients = await this.Patients.GetAll();
             return this.Ok(patients);
         }
 
@@ -32,10 +55,39 @@ namespace Pulse.Web.Controllers.Patients
         }
 
         [HttpGet("{patientId}")]
-        public async Task<IActionResult> GetPatient(string patientId)
+        public async Task<IActionResult> GetPatient(Guid patientId)
         {
-            var patient = new PatientDetailResponse();
-            return this.Ok(patient);
+            var patient = await this.Patients.GetOne(patientId);
+
+            if (patient == null)
+            {
+                return this.NotFound();
+            }
+
+            var allergies = await this.Allergies.GetAll(patientId);
+            var problems = await this.Diagnoses.GetAll(patientId);
+            var medications = await this.Medications.GetAll(patientId);
+
+            var patientResponse = new PatientDetailResponse
+            {
+                Address = patient.Address,
+                DateOfBirth = patient.DateOfBirth,
+                Gender = patient.Gender,
+                GpAddress = patient.GpAddress,
+                GpName = patient.GpName,
+                Id = patient.Id.ToString(),
+                Name = patient.Name,
+                PasNumber = patient.PasNo,
+                NhsNumber = patient.NhsNumber,
+                Telephone = patient.Phone,
+                Allergies = allergies.ToSourceTextInfoList(),
+                Problems = problems.ToSourceTextInfoList(),
+                Medications = medications.ToSourceTextInfoList(),
+                Contacts = new List<SourceTextInfo>(),
+                Transfers = new object[]{}
+            };
+
+            return this.Ok(patientResponse);
         }
 
         [HttpGet("{patientId}/counts")]

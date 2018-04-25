@@ -22,7 +22,7 @@ namespace Pulse.Web.Controllers.Patients.ResponseModels
 
         public string NhsNumber { get; set; }
 
-        public int PasNo { get; set; }
+        public string PasNo { get; set; }
 
         public string Phone { get; set; }
     }
