@@ -12,7 +12,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body',
 });
 
-const DEV_SERVER_URL = 'http://46.101.95.245';
+const DEV_SERVER_URL = 'http://localhost:50928';
 
 module.exports = {
   devtool: 'source-map',

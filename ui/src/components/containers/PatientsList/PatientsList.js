@@ -100,13 +100,19 @@ export default class PatientsList extends PureComponent {
 
     handlePatientViewClick = /* istanbul ignore next */ (userId, candidatePluginName) => {
       //TODO move to util function, some conjunction & disjunction magic at 12 am
-      const validPluginName = (_.includes(clientUrls.ORDERS, candidatePluginName) && clientUrls.ORDERS)
-        || (_.includes(clientUrls.RESULTS, candidatePluginName) && clientUrls.RESULTS)
-        || (_.includes(clientUrls.VITALS, candidatePluginName) && clientUrls.VITALS)
-        || (_.includes(clientUrls.DIAGNOSES, candidatePluginName) && clientUrls.DIAGNOSES)
-        || clientUrls.PATIENTS_SUMMARY;
+      // const validPluginName = (_.includes(clientUrls.ORDERS, candidatePluginName) && clientUrls.ORDERS)
+      //   || (_.includes(clientUrls.RESULTS, candidatePluginName) && clientUrls.RESULTS)
+      //   || (_.includes(clientUrls.VITALS, candidatePluginName) && clientUrls.VITALS)
+      //   || (_.includes(clientUrls.DIAGNOSES, candidatePluginName) && clientUrls.DIAGNOSES)
+      //   || clientUrls.PATIENTS_SUMMARY;
+      
+      // const patient = _.find(this.props.allPatients, (p) => p.nhsNumber === userId).first()
 
-      const path = `${clientUrls.PATIENTS}/${userId}/${validPluginName}`;
+      if (!userId) {
+        return;
+      }
+
+      const path = `${clientUrls.PATIENTS}/${userId}/${clientUrls.PATIENTS_SUMMARY}`;
       this.setState({ patientPath: path, isDisclaimerModalVisible: true });
     };
 
@@ -129,7 +135,7 @@ export default class PatientsList extends PureComponent {
         sortingByKey: columnNameSortBy,
         sortingByOrder: sortingOrder,
         filterKeys: [
-          'name', 'address', 'dateOfBirthConvert', 'gender', 'id',
+          'name', 'address', 'dateOfBirthConvert', 'gender', 'nhsNumber',
           'diagnosesCount', 'ordersCount', 'resultsCount', 'vitalsCount',
           'diagnosesDateConvert', 'ordersDateConvert', 'resultsDateConvert', 'vitalsDateConvert',
         ],

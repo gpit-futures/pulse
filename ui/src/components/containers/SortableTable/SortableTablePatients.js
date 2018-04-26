@@ -79,8 +79,8 @@ export default class SortableTablePatients extends PureComponent {
     const { headers, data, onHeaderCellClick, sortingOrder, columnNameSortBy, table, resourceData, emptyDataMessage } = this.props;
     const rowsData = getArrByTemplate(headers, data, '-');
     const headersName = [_.head(headers)];
-    const headersView = [_.last(headers)];
-    const rowsDataName = rowsData.map(el => el.filter(el => (el.name === 'name' || el.name === 'id')));
+    const headersView = [];
+    const rowsDataName = rowsData.map(el => el.filter(el => el.name === 'name'));
     const rowsDataView = rowsData.map(el => el.filter(el => el.name === 'viewPatientNavigation'));
 
     setTimeout(() => this.resizeFixedTables());
@@ -90,26 +90,7 @@ export default class SortableTablePatients extends PureComponent {
 
     return (
       <div>
-        {(table === 'patientsList' && !_.isEmpty(data)) ? <table
-          className="table table-striped  table-bordered table-sorted table-hover table-fixedcol table-patients-name"
-          ref={(el) => { this.tableNames = el; }}
-        >
-          <colgroup>
-            {/*//TODO inject theme here*/}
-            {headersName.map(item => <col style={{ width: item.width }} key={_.uniqueId('__colHeadersName__')} />)}
-          </colgroup>
-          <thead ref="tableHead">
-            <SortableTableHeaderRow
-              headers={headersName}
-              onHeaderCellClick={onHeaderCellClick}
-              sortingOrder={sortingOrder}
-              columnNameSortBy={columnNameSortBy}
-            />
-          </thead>
-          <tbody>
-            {this.getSortableTableRows(rowsDataName, resourceData, emptyDataMessage)}
-          </tbody>
-        </table> : null }
+        
         <table
           className={`table table-striped table-bordered table-sorted table-hover table-fixedcol table-patients-full rwd-table ${table}`}
           ref={(el) => { this.tableFull = el; }}
@@ -117,10 +98,7 @@ export default class SortableTablePatients extends PureComponent {
           <colgroup>
             {/*//TODO inject theme here*/}
             {headers.map((item) => {
-              if (item.display) {
-                return (<col style={{ width: item.width, display: item.display }} key={_.uniqueId('__colHeaders__')} />)
-              }
-              return (<col style={{ width: item.width }} key={_.uniqueId('__colHeaders__')} />)
+              return (<col style={{ width: item.width, display: item.display, minWidth: item.minWidth }} key={_.uniqueId('__colHeaders__')} />)
             })}
           </colgroup>
           <thead>
@@ -135,26 +113,7 @@ export default class SortableTablePatients extends PureComponent {
             {this.getSortableTableRows(rowsData, resourceData, emptyDataMessage)}
           </tbody>
         </table>
-        {(table === 'patientsList' && !_.isEmpty(data)) ? <table
-          className="table table-striped table-bordered table-sorted table-fixedcol table-patients-controls"
-          ref={(el) => { this.tableControls = el; }}
-        >
-          <colgroup>
-            {/*//TODO inject theme here*/}
-            {headersView.map(item => <col style={{ width: item.width }} key={_.uniqueId('__colHeadersView__')} />)}
-          </colgroup>
-          <thead>
-            <SortableTableHeaderRow
-              headers={headersView}
-              onHeaderCellClick={onHeaderCellClick}
-              sortingOrder={sortingOrder}
-              columnNameSortBy={columnNameSortBy}
-            />
-          </thead>
-          <tbody>
-            {this.getSortableTableRows(rowsDataView, resourceData, emptyDataMessage)}
-          </tbody>
-        </table> : null }
+        
       </div>)
   }
 }

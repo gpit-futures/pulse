@@ -25,14 +25,14 @@ export default class SortableTableHoveredRow extends PureComponent {
 
   render() {
     const { rowData, headers, onCellClick, columnNameSortBy, onMouseEnter, onMouseLeave, hoveredRowIndex, index, table } = this.props;
-    const userId = _.flow(_.find({ name: 'id' }), _.get('value'))(rowData);
+    const userId =  _.flow(_.find({ name: 'nhsNumber' }), _.get('value'))(rowData);
     const sourceId = _.flow(_.find({ name: 'sourceId' }), _.get('value'))(rowData);
 
     const rowDataItem = rowData.map((rowItem, index) => {
-      if (rowItem.name === 'id') {
+      if (rowItem.name === 'nhsNumber') {
         return <td data-table-hover data-th={headers[index].title} key={_.uniqueId('__SortableTableHoveredRow__')} name={rowItem.name} onClick={() => onCellClick(userId, rowItem.name, sourceId)} className={classNames({ 'sorted': rowItem.name === columnNameSortBy, 'text-center': (table === 'patientsList' && rowItem.name !== 'name' && rowItem.name !== 'address') })}>{formatNHSNumber(rowItem.value)}</td>
       }
-      if (rowItem.name === 'viewPatientNavigation') {
+      if (rowItem.name === 'viewPatientNavigation' || rowItem.name === 'name') {
         return <td data-table-hover data-th={headers[index].title} key={_.uniqueId('__SortableTableHoveredRow__')} name={rowItem.name} onClick={() => onCellClick(userId, rowItem.name, sourceId)} className={classNames('patient-control', { 'sorted': rowItem.name === columnNameSortBy })}>{rowItem.value}</td>
       }
       return <td data-table-hover data-th={headers[index].title} key={_.uniqueId('__SortableTableHoveredRow__')} name={rowItem.name} onClick={() => onCellClick(userId, rowItem.name, sourceId)} className={classNames({ 'sorted': rowItem.name === columnNameSortBy, 'text-center': (table === 'patientsList' && rowItem.name !== 'name' && rowItem.name !== 'address') })}>{rowItem.value}</td>

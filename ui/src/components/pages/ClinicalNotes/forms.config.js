@@ -1,6 +1,6 @@
 export const valuesNames = {
   TYPE: 'clinicalNotesType',
-  NOTE: 'note',
+  NOTE: 'notes',
   AUTHOR: 'author',
   DATE: 'currentDate',
   DATE_CREATED: 'dateCreated',
