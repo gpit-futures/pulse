@@ -7,9 +7,11 @@ namespace Pulse.Infrastructure.EntryItems
 {
     public interface IDiagnosisRepository
     {
-        Task<IEnumerable<Diagnosis>> GetAll(Guid patientId);
+        Task<IEnumerable<Diagnosis>> GetAll(string patientId);
 
         Task<Diagnosis> GetOne(Guid id);
+
+        Task<Diagnosis> GetOne(string patientId, string sourceId);
 
         Task AddOrUpdate(Diagnosis item);
     }

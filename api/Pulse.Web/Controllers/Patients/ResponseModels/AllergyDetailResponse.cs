@@ -1,11 +1,10 @@
 ﻿using System;
-using Pulse.Domain.Interfaces;
 
-namespace Pulse.Domain.EntryItems.Entities
+namespace Pulse.Web.Controllers.Patients.ResponseModels
 {
-    public class Allergy : IEntryItem, IEntity
+    public class AllergyDetailResponse
     {
-        public Guid Id { get; set; }
+        public string Author { get; set; }
 
         public string Cause { get; set; }
 
@@ -13,22 +12,18 @@ namespace Pulse.Domain.EntryItems.Entities
 
         public string CauseTerminology { get; set; }
 
+        public DateTime DateCreated { get; set; }
+
         public string OriginalComposition { get; set; }
 
         public string OriginalSource { get; set; }
 
         public string Reaction { get; set; }
 
-        public string TerminologyCode { get; set; }
-
-        public string PatientId { get; set; }
-
-        public string Author { get; set; }
-
-        public DateTime DateCreated { get; set; }
-
         public string Source { get; set; }
 
         public string SourceId { get; set; }
+
+        public string TerminologyCode { get; set; }
     }
 }

@@ -7,37 +7,37 @@ using Pulse.Infrastructure.Mongo;
 
 namespace Pulse.Infrastructure.EntryItems
 {
-    public class TestResultRepository : ITestResultRepository
+    public class ContactRepository :  IContactRepository
     {
-        public TestResultRepository(IMongoDatabaseFactory factory)
+        public ContactRepository(IMongoDatabaseFactory factory)
         {
             this.Collection = factory
                 .GetDatabase()
-                .GetCollection<TestResult>("testResults");
+                .GetCollection<Contact>("contacts");
         }
 
-        private IMongoCollection<TestResult> Collection { get; }
+        private IMongoCollection<Contact> Collection { get; }
 
-        public async Task<IEnumerable<TestResult>> GetAll(string patientId)
+        public async Task<IEnumerable<Contact>> GetAll(string patientId)
         {
-            var all = this.Collection.Where(x => x.PatientId == patientId);
-
-            return await all.ToListAsync();
+            return await this.Collection
+                .Where(x => x.PatientId == patientId)
+                .ToListAsync();
         }
 
-        public Task<TestResult> GetOne(Guid id)
+        public Task<Contact> GetOne(Guid id)
         {
             return this.Collection.GetOneAsync(id);
         }
 
-        public async Task<TestResult> GetOne(string patientId, string sourceId)
+        public async Task<Contact> GetOne(string patientId, string sourceId)
         {
             return await this.Collection
                 .Where(x => x.PatientId == patientId && x.SourceId == sourceId)
                 .FirstOrDefaultAsync();
         }
 
-        public Task AddOrUpdate(TestResult item)
+        public Task AddOrUpdate(Contact item)
         {
             return this.Collection.AddOrUpdate(item);
         }

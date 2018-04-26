@@ -7,9 +7,11 @@ namespace Pulse.Infrastructure.EntryItems
 {
     public interface IAllergyRepository
     {
-        Task<IEnumerable<Allergy>> GetAll(Guid patientId);
+        Task<IEnumerable<Allergy>> GetAll(string patientId);
 
         Task<Allergy> GetOne(Guid id);
+
+        Task<Allergy> GetOne(string patientId, string sourceId);
 
         Task AddOrUpdate(Allergy item);
     }

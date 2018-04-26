@@ -1,10 +1,14 @@
-﻿namespace Pulse.Web.Controllers.Patients.RequestModels
+﻿using System;
+
+namespace Pulse.Web.Controllers.Patients.RequestModels
 {
     public class ProblemCreateRequest
     {
+        public string Author { get; set; }
+
         public string Code { get; set; }
 
-        public string DateOfOnset { get; set; }
+        public DateTime DateOfOnset { get; set; }
 
         public string Description { get; set; }
 

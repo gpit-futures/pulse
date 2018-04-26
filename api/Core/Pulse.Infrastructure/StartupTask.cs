@@ -20,6 +20,7 @@ namespace Pulse.Infrastructure
             services.AddScoped<IDiagnosisRepository, DiagnosisRepository>();
             services.AddScoped<IMedicationRepository, MedicationRepository>();
             services.AddScoped<ITestResultRepository, TestResultRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
         }
     }
 }

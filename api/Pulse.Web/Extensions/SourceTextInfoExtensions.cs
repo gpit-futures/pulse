@@ -54,5 +54,21 @@ namespace Pulse.Web.Extensions
                     Text = x.Name
                 }).ToList();
         }
+
+        public static IList<SourceTextInfo> ToSourceTextInfoList(this IEnumerable<Contact> contacts)
+        {
+            if (contacts == null || !contacts.Any())
+            {
+                return new List<SourceTextInfo>();
+            }
+
+            return contacts
+                .Select(x => new SourceTextInfo
+                {
+                    Source = x.Source,
+                    SourceId = x.SourceId,
+                    Text = x.Name
+                }).ToList();
+        }
     }
 }

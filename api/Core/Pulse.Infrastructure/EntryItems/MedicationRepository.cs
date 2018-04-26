@@ -18,7 +18,7 @@ namespace Pulse.Infrastructure.EntryItems
 
         private IMongoCollection<Medication> Collection { get; }
 
-        public async Task<IEnumerable<Medication>> GetAll(Guid patientId)
+        public async Task<IEnumerable<Medication>> GetAll(string patientId)
         {
             var all = this.Collection.Where(x => x.PatientId == patientId);
 
@@ -28,6 +28,13 @@ namespace Pulse.Infrastructure.EntryItems
         public Task<Medication> GetOne(Guid id)
         {
             return this.Collection.GetOneAsync(id);
+        }
+
+        public async Task<Medication> GetOne(string patientId, string sourceId)
+        {
+            return await this.Collection
+                .Where(x => x.PatientId == patientId && x.SourceId == sourceId)
+                .FirstOrDefaultAsync();
         }
 
         public Task AddOrUpdate(Medication item)

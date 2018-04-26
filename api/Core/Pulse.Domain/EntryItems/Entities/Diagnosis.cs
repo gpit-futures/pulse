@@ -1,5 +1,4 @@
 ﻿using System;
-using MongoDB.Bson;
 using Pulse.Domain.Interfaces;
 
 namespace Pulse.Domain.EntryItems.Entities
@@ -18,7 +17,7 @@ namespace Pulse.Domain.EntryItems.Entities
 
         public string Terminology { get; set; }
 
-        public Guid PatientId { get; set; }
+        public string PatientId { get; set; }
 
         public string Author { get; set; }
 

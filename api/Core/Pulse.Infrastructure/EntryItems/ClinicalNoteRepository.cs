@@ -18,9 +18,10 @@ namespace Pulse.Infrastructure.EntryItems
 
         private IMongoCollection<ClinicalNote> Collection { get; }
 
-        public async Task<IEnumerable<ClinicalNote>> GetAll(Guid patientId)
+        public async Task<IEnumerable<ClinicalNote>> GetAll(string patientId)
         {
-            var all = this.Collection.Where(x => x.PatientId == patientId);
+            var all = this.Collection
+                .Where(x => x.PatientId == patientId);
 
             return await all.ToListAsync();
         }
@@ -28,6 +29,15 @@ namespace Pulse.Infrastructure.EntryItems
         public Task<ClinicalNote> GetOne(Guid id)
         {
             return this.Collection.GetOneAsync(id);
+        }
+
+        public Task<ClinicalNote> GetOne(string patientId, string sourceId)
+        {
+            var note = this.Collection
+                .Where(x => x.PatientId == patientId && string.Equals(x.SourceId, sourceId))
+                .FirstOrDefaultAsync();
+
+            return note;
         }
 
         public Task AddOrUpdate(ClinicalNote item)

@@ -25,9 +25,11 @@ namespace Pulse.Infrastructure.Patients
             return await all.ToListAsync();
         }
 
-        public Task<Patient> GetOne(Guid id)
+        public Task<Patient> GetOne(string id)
         {
-            return this.Collection.GetOneAsync(id);
+            return this.Collection
+                .Where(x => string.Equals(x.NhsNumber, id))
+                .FirstOrDefaultAsync();
         }
 
         public Task AddOrUpdate(Patient item)

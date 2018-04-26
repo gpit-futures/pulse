@@ -4,7 +4,7 @@ namespace Pulse.Domain.Interfaces
 {
     public interface IEntryItem
     {
-        Guid PatientId { get; set; }
+        string PatientId { get; set; }
 
         string Author { get; set; }
 

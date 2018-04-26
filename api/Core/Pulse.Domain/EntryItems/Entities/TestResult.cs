@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MongoDB.Bson;
 using Pulse.Domain.Interfaces;
 
 namespace Pulse.Domain.EntryItems.Entities
@@ -19,7 +18,7 @@ namespace Pulse.Domain.EntryItems.Entities
 
         public IList<ResultItem> Results { get; set; }
 
-        public Guid PatientId { get; set; }
+        public string PatientId { get; set; }
 
         public string Author { get; set; }
 
