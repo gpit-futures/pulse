@@ -52,17 +52,7 @@ export default class NavSearch extends PureComponent {
 
     return <div className="wrap-search wrap-header-search" ref={node => this.node = node}>
       <div className="header-search">
-        <div className={classNames('control-group left control-search-select dropdown', { 'open': openedPanel === SEARCH_CONTENT })}>
-          <div>
-            <SearchOptions onSelect={this.handleSelect} {...{ selected, BASIC_SEARCH, ADVANCED_SEARCH, SEARCH_CONTENT }} />
-            <PTButton className="btn btn-dropdown-toggle btn-search-toggle" onClick={() => this.handleMouseDown(SEARCH_CONTENT)}>
-              <i className="btn-icon fa fa-bars" />
-            </PTButton>
-          </div>
-        </div>
-        { selected === BASIC_SEARCH && <BasicPatientSearch /> }
-        { selected === ADVANCED_SEARCH && <AdvancedPatientSearch className="advanced-search" onClose={() => this.handleSelect(BASIC_SEARCH)} /> }
-        { selected === SEARCH_CONTENT && <ClinicalQuerySearch className="clinical-query-search" onClose={() => this.handleSelect(BASIC_SEARCH)} /> }
+        <BasicPatientSearch />
       </div>
     </div>
   }

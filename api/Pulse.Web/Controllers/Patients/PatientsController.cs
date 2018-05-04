@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Pulse.Domain.EntryItems.Entities;
 using Pulse.Infrastructure.EntryItems;
+using Pulse.Infrastructure.PatientDetails;
 using Pulse.Infrastructure.Patients;
 using Pulse.Web.Controllers.Patients.RequestModels;
 using Pulse.Web.Controllers.Patients.ResponseModels;
@@ -17,6 +18,7 @@ namespace Pulse.Web.Controllers.Patients
     public class PatientsController : Controller
     {
         public PatientsController(IPatientRepository patients, 
+            IPatientDetailsRepository patientDetails,
             IAllergyRepository allergies, 
             IMedicationRepository medications, 
             IDiagnosisRepository diagnoses, 
@@ -24,6 +26,7 @@ namespace Pulse.Web.Controllers.Patients
             IContactRepository contacts)
         {
             this.Patients = patients;
+            this.PatientDetails = patientDetails;
             this.Allergies = allergies;
             this.Medications = medications;
             this.Diagnoses = diagnoses;
@@ -32,6 +35,8 @@ namespace Pulse.Web.Controllers.Patients
         }
 
         private IPatientRepository Patients { get; }
+
+        private IPatientDetailsRepository PatientDetails { get; }
 
         private IAllergyRepository Allergies { get; }
 
@@ -99,6 +104,19 @@ namespace Pulse.Web.Controllers.Patients
             };
 
             return this.Ok(patientResponse);
+        }
+
+        [HttpGet("{patientId}/banner")]
+        public async Task<IActionResult> GetPatientDetails(string patientId)
+        {
+            var patient = await this.PatientDetails.GetOne(patientId);
+
+            if (patient == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(patient);
         }
 
         [HttpGet("{patientId}/counts")]

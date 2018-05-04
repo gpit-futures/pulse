@@ -9,6 +9,8 @@ namespace Pulse.Infrastructure.Patients
     {
         Task<IEnumerable<Patient>> GetAll();
 
+        Task<IEnumerable<Patient>> GetSome(int limit);
+
         Task<Patient> GetOne(string id);
 
         Task AddOrUpdate(Patient item);

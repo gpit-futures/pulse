@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Pulse.Infrastructure.EntryItems;
 using Pulse.Infrastructure.Mongo;
+using Pulse.Infrastructure.PatientDetails;
 using Pulse.Infrastructure.Patients;
 
 namespace Pulse.Infrastructure
@@ -14,6 +15,7 @@ namespace Pulse.Infrastructure
 
 
             services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IPatientDetailsRepository, PatientDetailsRepository>();
 
             services.AddScoped<IAllergyRepository, AllergyRepository>();
             services.AddScoped<IClinicalNoteRepository, ClinicalNoteRepository>();

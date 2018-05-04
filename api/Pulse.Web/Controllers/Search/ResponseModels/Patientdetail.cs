@@ -2,7 +2,7 @@
 
 namespace Pulse.Web.Controllers.Search.ResponseModels
 {
-    public class Patientdetail
+    public class PatientDetail
     {
         public string Source { get; set; }
 

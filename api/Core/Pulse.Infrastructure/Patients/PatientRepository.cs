@@ -20,9 +20,17 @@ namespace Pulse.Infrastructure.Patients
 
         public async Task<IEnumerable<Patient>> GetAll()
         {
-            var all = this.Collection.FindAll();
+            return await this.Collection
+                .FindAll()
+                .ToListAsync();
+        }
 
-            return await all.ToListAsync();
+        public async Task<IEnumerable<Patient>> GetSome(int limit)
+        {
+            return await this.Collection
+                .FindAll()
+                .Limit(limit)
+                .ToListAsync();
         }
 
         public Task<Patient> GetOne(string id)

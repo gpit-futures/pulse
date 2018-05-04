@@ -8,6 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { Provider } from 'react-redux';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
+import { DwClientConnector } from "dw-client-connector";
 
 import './polyfills';
 import App from './components/containers/App/App';
@@ -16,6 +17,8 @@ import rootEpic from './root.epic';
 import { initialiseStart } from './ducks/initialise-app.duck';
 
 console.log(`App started in ${process.env.NODE_ENV} mode`);
+
+DwClientConnector.init("http://localhost:3101", "http://localhost:3000");
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();

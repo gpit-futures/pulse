@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 
+import { DwClientConnector } from "dw-client-connector";
+
 import { themeConfigs } from '../../../themes.config';
 import SimpleDashboardPanel from './SimpleDashboardPanel';
 import RssDashboardPanel from './RssDashboardPanel';
@@ -90,6 +92,7 @@ export default class PatientsSummary extends PureComponent {
 
     componentDidMount() {
       const { actions } = this.props;
+      DwClientConnector.publish({name: "test-message", data: "test"});
       themeConfigs.isLeedsPHRTheme ? actions.fetchFeedsRequest() : null;
     }
 

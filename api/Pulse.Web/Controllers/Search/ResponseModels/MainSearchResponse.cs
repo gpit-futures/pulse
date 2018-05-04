@@ -6,6 +6,6 @@ namespace Pulse.Web.Controllers.Search.ResponseModels
     {
         public int TotalPatients { get; set; }
 
-        public IList<Patientdetail> PatientDetails { get; set; }
+        public IList<PatientDetail> PatientDetails { get; set; }
     }
 }
