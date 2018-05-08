@@ -17,7 +17,7 @@ export default class PatientsList extends PureComponent {
       allPatients: PropTypes.arrayOf(
         PropTypes.shape({
           address: PropTypes.string,
-          dateOfBirth: PropTypes.number,
+          dateOfBirth: PropTypes.string,
           gender: PropTypes.string,
           gpAddress: PropTypes.string,
           id: PropTypes.string,

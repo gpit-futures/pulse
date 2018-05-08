@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { compose, lifecycle } from 'recompose';
 import _ from 'lodash/fp';
+import { DwClientConnector } from "dw-client-connector";
 
 import Sidebar from '../../../presentational/Sidebar/Sidebar';
 import { toolbarSelector, routerSelector } from './selectors';
@@ -12,13 +13,14 @@ import { setSidebarVisibility } from '../../../../ducks/set-sidebar-visibility';
 import { closeSidebarOnUnmount, openSidebarOnMount } from '../../../../utils/HOCs/sidebar-handle';
 import { mainPagesTitles } from '../../../../config/client-urls.constants'
 import { formatNHSNumber } from '../../../../utils/table-helpers/table.utils'
-import { fetchHeaderToolbarOnMount } from '../../../../utils/HOCs/fetch-patients.utils';
+import { fetchPatientBannerRequest } from "../../../../ducks/fetch-patient-banner.duck";
+import { fetchHeaderToolbarOnMount, fetchPatientBannerOnMount } from '../../../../utils/HOCs/fetch-patients.utils';
 import { fetchPatientSummaryRequest } from '../../../../ducks/fetch-patient-summary.duck';
 
-const mapDispatchToProps = dispatch => ({ actions: bindActionCreators({ setSidebarVisibility, fetchPatientSummaryRequest }, dispatch) });
+const mapDispatchToProps = dispatch => ({ actions: bindActionCreators({ setSidebarVisibility, fetchPatientSummaryRequest, fetchPatientBannerRequest }, dispatch) });
 
 @compose(connect(toolbarSelector, mapDispatchToProps), connect(routerSelector))
-@compose(lifecycle(closeSidebarOnUnmount), lifecycle(openSidebarOnMount), lifecycle(fetchHeaderToolbarOnMount))
+@compose(lifecycle(closeSidebarOnUnmount), lifecycle(openSidebarOnMount), lifecycle(fetchHeaderToolbarOnMount), lifecycle(fetchPatientBannerOnMount))
 class HeaderToolbar extends PureComponent {
   static propTypes = {
     isSidebarVisible: PropTypes.bool.isRequired,
@@ -34,6 +36,10 @@ class HeaderToolbar extends PureComponent {
   getState = hash => _.getOr(null, [hash])(mainPagesTitles);
 
   toggleSidebarVisibility = /* istanbul ignore next */ () => this.props.actions.setSidebarVisibility(!this.props.isSidebarVisible);
+
+  componentWillUnmount() {
+    DwClientConnector.publish({ name: "patient-context:ended", data: null });
+  }
 
   render() {
     const { isSidebarVisible, name, gpName, gpAddress, dateOfBirth, gender, telephone, userId, router } = this.props;

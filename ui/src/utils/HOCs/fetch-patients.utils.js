@@ -75,6 +75,8 @@ export const fetchListOrdersOnMount = ({
 
 export const fetchPatientSummaryOnMount = (generateFetchListOnMount('fetchPatientSummaryRequest'));
 
+export const fetchPatientBannerOnMount = (generateFetchListOnMount("fetchPatientBannerRequest"));
+
 export const fetchPatientAllergiesOnMount = (generateFetchListOnMount('fetchPatientAllergiesRequest'));
 export const fetchPatientAllergiesDetailOnMount = (generateFetchDetailOnMount('fetchPatientAllergiesDetailRequest'));
 
