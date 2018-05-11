@@ -1,5 +1,4 @@
 ﻿using System;
-using MongoDB.Bson;
 
 namespace Pulse.Domain.Interfaces
 {

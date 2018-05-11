@@ -58,7 +58,6 @@ const feeds = [
 
 @connect(patientSummarySelector, mapDispatchToProps)
 @connect(feedsSelector)
-// @compose(lifecycle(fetchPatientBannerOnMount))
 @compose(lifecycle(fetchPatientSummaryOnMount))
 export default class PatientsSummary extends PureComponent {
     static propTypes = {
