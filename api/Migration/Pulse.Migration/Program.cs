@@ -8,11 +8,16 @@ namespace Pulse.Migration
     {
         static void Main(string[] args)
         {
+            var connection = args.Length == 0
+                ? "mongodb://localhost:27017"
+                : args[0];
+
             Console.WriteLine("Migrating data...");
+            Console.WriteLine(args.Length);
 
             var settings = new SettingsBuilder()
                 .AddDatabase("Pulse")
-                .WithConnectionString("mongodb://localhost:27017")
+                .WithConnectionString(connection)
                 .DropDatabaseFirst()
                 .AddCollection("patients", true, "./data/patients.json")
                 .AddCollection("patientDetails", true, "./data/patientDetails.json")
@@ -23,7 +28,6 @@ namespace Pulse.Migration
                 .Build();
 
             Console.WriteLine("Import finished");
-            Console.Read();
         }
     }
 }

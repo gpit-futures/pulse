@@ -1,0 +1,13 @@
+data\
+bin\
+obj\
+.vscode\
+.vs\
+node_modules\
+
+**\data\
+**\bin\
+**\obj\
+**\.vscode\
+**\.vs\
+**\node_modules\

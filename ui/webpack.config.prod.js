@@ -40,6 +40,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
+        // "BASE_URL": JSON.stringify("http://localhost:8081")
       }
     }),
 
@@ -52,14 +53,14 @@ module.exports = {
 
     new webpack.optimize.DedupePlugin(),
 
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      exclude: [/node_modules/],
-      parallel: 4,
-      compress: {
-        warnings: false,
-      },
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   comments: false,
+    //   exclude: [/node_modules/],
+    //   parallel: 4,
+    //   compress: {
+    //     warnings: false,
+    //   },
+    // }),
 
 
   ],
