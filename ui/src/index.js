@@ -18,7 +18,7 @@ import { initialiseStart } from './ducks/initialise-app.duck';
 
 console.log(`App started in ${process.env.NODE_ENV} mode`);
 
-DwClientConnector.init("http://localhost:3101", "http://localhost:3000");
+DwClientConnector.init(window.location.origin, "http://localhost:3000");
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();

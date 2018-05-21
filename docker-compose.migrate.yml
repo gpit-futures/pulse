@@ -1,9 +1,7 @@
 version: "3"
 services:
-  api:
-    image: rowellx68/pulsetile
-    ports:
-      - "3101:80"
+  migrate:
+    image: rowellx68/pulsetile_migrate
     links:
       - pulsedb
     depends_on:
