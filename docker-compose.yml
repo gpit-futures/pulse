@@ -1,7 +1,7 @@
 version: "3"
 services:
   api:
-    image: rowellx68/pulsetile
+    image: gpitfutures/pulsetile
     ports:
       - "3101:80"
     links:

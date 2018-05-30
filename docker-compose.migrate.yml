@@ -1,7 +1,7 @@
 version: "3"
 services:
   migrate:
-    image: rowellx68/pulsetile_migrate
+    image: gpitfutures/pulsetile_migrate
     links:
       - pulsedb
     depends_on:

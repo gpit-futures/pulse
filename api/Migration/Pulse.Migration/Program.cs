@@ -13,7 +13,6 @@ namespace Pulse.Migration
                 : args[0];
 
             Console.WriteLine("Migrating data...");
-            Console.WriteLine(args.Length);
 
             var settings = new SettingsBuilder()
                 .AddDatabase("Pulse")
@@ -27,7 +26,7 @@ namespace Pulse.Migration
                 .UsingSettings(settings)
                 .Build();
 
-            Console.WriteLine("Import finished");
+            Console.WriteLine("Importing of base data complete.");
         }
     }
 }
