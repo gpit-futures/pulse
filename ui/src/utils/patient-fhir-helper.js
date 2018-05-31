@@ -34,7 +34,7 @@ export function convertToFhir(patient) {
             "use": ""
           }
         ],
-        "gender": patient.gender,
+        "gender": patient.gender.toLowerCase(),
         "birthDate": patient.dateOfBirth,
         "address": [
           {
