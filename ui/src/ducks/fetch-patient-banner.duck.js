@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { createAction } from 'redux-actions';
 import { DwClientConnector } from "dw-client-connector";
+import { convertToFhir } from "../utils/patient-fhir-helper"
 
 import { usersUrls } from '../config/server-urls.constants';
 
@@ -26,7 +27,7 @@ export default function reducer(patientBanner = {}, action) {
     switch (action.type) {
         case FETCH_PATIENT_BANNER_SUCCESS:
             const { payload } = action;
-            DwClientConnector.publish({ name: "patient-context:changed", data: payload.banner });
+            DwClientConnector.publish({ name: "patient-context:changed", data: convertToFhir(payload.banner) });
             return _.set(payload.userId, payload.banner, patientBanner);
         default:
             return patientBanner;
