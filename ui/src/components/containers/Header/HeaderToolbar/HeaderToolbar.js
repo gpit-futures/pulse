@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { compose, lifecycle } from 'recompose';
 import _ from 'lodash/fp';
-import { DwClientConnector } from "dw-client-connector";
 
 import Sidebar from '../../../presentational/Sidebar/Sidebar';
 import { toolbarSelector, routerSelector } from './selectors';
@@ -38,7 +37,14 @@ class HeaderToolbar extends PureComponent {
   toggleSidebarVisibility = /* istanbul ignore next */ () => this.props.actions.setSidebarVisibility(!this.props.isSidebarVisible);
 
   componentWillUnmount() {
-    DwClientConnector.publish({ name: "patient-context:ended", data: null });
+    // fire patient context changed event
+    window.isElectron = function () { return 'Bridge' in window; };
+    if (isElectron()) {
+        window.Bridge.setPatientContext(null);
+        console.log('called setPatientContext with : ' + convertToFhir(payload.banner));
+    } else {
+        console.log('did not load preload script - App not running in an Electron Context')
+    }
   }
 
   render() {
