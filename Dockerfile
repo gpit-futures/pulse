@@ -1,8 +1,10 @@
 FROM node:carbon-alpine as build-ui
 WORKDIR /app-ui
 
-COPY ./ui ./
+COPY ./ui/package.json .
 RUN npm install
+
+COPY ./ui/ .
 RUN npm run build
 
 FROM microsoft/aspnetcore-build:2.0 AS build-api
