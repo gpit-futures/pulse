@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Pulse.Infrastructure.EntryItems;
+using Pulse.Infrastructure.MessageQueue;
+using Pulse.Infrastructure.MessageQueue.Handlers;
+using Pulse.Infrastructure.MessageQueue.Messages;
 using Pulse.Infrastructure.Mongo;
 using Pulse.Infrastructure.PatientDetails;
 using Pulse.Infrastructure.Patients;
@@ -23,6 +26,12 @@ namespace Pulse.Infrastructure
             services.AddScoped<IMedicationRepository, MedicationRepository>();
             services.AddScoped<ITestResultRepository, TestResultRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
+
+
+            services.AddTransient<IMessageHandler<ObservationCreated>, ObservationCreatedHandler>();
+            services.AddTransient<IMessageHandler<CarePlanCreated>, CarePlanCreatedHandler>();
+            services.AddTransient<IMessageHandler<PatientCreated>, PatientCreatedHandler>();
+            services.AddTransient<IMessageHandler<EncounterCreated>, EncounterCreatedHandler>();
         }
     }
 }

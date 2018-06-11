@@ -10,6 +10,7 @@ using Pulse.Infrastructure.Patients;
 using Pulse.Web.Controllers.Patients.RequestModels;
 using Pulse.Web.Controllers.Patients.ResponseModels;
 using Pulse.Web.Extensions;
+using RawRabbit;
 
 namespace Pulse.Web.Controllers.Patients
 {
@@ -23,7 +24,7 @@ namespace Pulse.Web.Controllers.Patients
             IMedicationRepository medications, 
             IDiagnosisRepository diagnoses, 
             IClinicalNoteRepository clinicalNotes, 
-            IContactRepository contacts)
+            IContactRepository contacts, IBusClient bus)
         {
             this.Patients = patients;
             this.PatientDetails = patientDetails;
@@ -32,6 +33,7 @@ namespace Pulse.Web.Controllers.Patients
             this.Diagnoses = diagnoses;
             this.ClinicalNotes = clinicalNotes;
             this.Contacts = contacts;
+            this.Bus = bus;
         }
 
         private IPatientRepository Patients { get; }
@@ -47,6 +49,8 @@ namespace Pulse.Web.Controllers.Patients
         private IClinicalNoteRepository ClinicalNotes { get; }
 
         private IContactRepository Contacts { get; }
+
+        private IBusClient Bus { get; }
 
         [HttpGet]
         public async Task<IActionResult> GetPatients()

@@ -8,6 +8,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.6.0" />
+    <PackageReference Include="RawRabbit" Version="1.10.4" />
+    <PackageReference Include="RawRabbit.Attributes" Version="1.10.4" />
   </ItemGroup>
 
   <ItemGroup>
