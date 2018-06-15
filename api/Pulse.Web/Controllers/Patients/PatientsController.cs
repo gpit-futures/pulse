@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pulse.Domain.EntryItems.Entities;
 using Pulse.Infrastructure.EntryItems;
@@ -14,6 +15,7 @@ using RawRabbit;
 
 namespace Pulse.Web.Controllers.Patients
 {
+    [Authorize(Policy = "Read")]
     [Produces("application/json")]
     [Route("api/patients")]
     public class PatientsController : Controller
@@ -180,6 +182,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(note);
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPut("{patientId}/clinicalnotes/{sourceId}")]
         public async Task<IActionResult> EditPatientClinicalNotesDetail(string patientId, string sourceId, [FromBody] ClinicalNoteEditRequest note)
         {
@@ -201,6 +204,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPost("{patientId}/clinicalnotes")]
         public async Task<IActionResult> CreatePatientClinicalNotesDetail(string patientId, [FromBody] ClinicalNoteCreateRequest note)
         {
@@ -255,6 +259,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(problem);
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPut("{patientId}/problems/{sourceId}")]
         public async Task<IActionResult> EditPatientproblemDetail(string patientId, string sourceId, [FromBody] ProblemEditRequest problem)
         {
@@ -279,6 +284,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPost("{patientId}/problems")]
         public async Task<IActionResult> CreatePatientProblemDetail(string patientId, [FromBody] ProblemCreateRequest problem)
         {
@@ -337,6 +343,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(medication);
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPost("{patientId}/medications")]
         public async Task<IActionResult> CreatePatientMedicationDetail(string patientId,
             [FromBody] MedicationCreateRequest create)
@@ -362,6 +369,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPut("{patientId}/medications/{sourceId}")]
         public async Task<IActionResult> EditPatientMedicationDetails(string patientId, string sourceId,
             [FromBody] MedicationEditRequest medication)
@@ -424,6 +432,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(contact);
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPost("{patientId}/contacts")]
         public async Task<IActionResult> CreatePatientContactDetail(string patientId,
             [FromBody] ContactCreateRequest create)
@@ -449,6 +458,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPut("{patientId}/contacts/{sourceId}")]
         public async Task<IActionResult> EditPatientContactDetail(string patientId, string sourceId,
             [FromBody] ContactEditRequest contact)
@@ -507,6 +517,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(allergy);
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPost("{patientId}/allergies")]
         public async Task<IActionResult> CreatePatientAllergyDetail(string patientId,
             [FromBody] AllergyCreateRequest create)
@@ -529,6 +540,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Write")]
         [HttpPut("{patientId}/allergies/{sourceId}")]
         public async Task<IActionResult> EditPatientAlleryDetail(string patientId, string sourceId,
             [FromBody] AllergyEditRequest edit)

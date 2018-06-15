@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Pulse.Infrastructure;
-using Pulse.Infrastructure.MessageQueue;
-using Pulse.Infrastructure.MessageQueue.Handlers;
-using Pulse.Infrastructure.MessageQueue.Messages;
-using Pulse.Web.Messages;
 using RawRabbit;
 using RawRabbit.Attributes;
 using RawRabbit.Common;
-using RawRabbit.Serialization;
 using RawRabbit.vNext;
 
 namespace Pulse.Web
@@ -46,6 +39,28 @@ namespace Pulse.Web
                     ioc.AddSingleton<IConfigurationEvaluator, AttributeConfigEvaluator>();
                 });
 
+            var token = this.Configuration.GetSection("Jwk").Get<JsonWebKey>();
+
+            services.AddAuthorization(conf =>
+            {
+                conf.AddPolicy("Read", pol => pol.RequireClaim("FOO_READ"));
+                conf.AddPolicy("Write", pol => pol.RequireClaim("FOO_WRITE"));
+            })
+            .AddAuthentication(conf =>
+            {
+                conf.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                conf.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(conf =>
+            {
+                conf.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = token
+                };
+            });
+
             this._applicationContainer = Bootstrapper.SetupContainer(services);
             this._bus = Bootstrapper.SetupMessageSubscriptions(services, this._applicationContainer);
         }
@@ -59,6 +74,8 @@ namespace Pulse.Web
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
