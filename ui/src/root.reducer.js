@@ -7,6 +7,7 @@ import { pluginsReducerConfig } from './plugins.config';
 import fetchInitialiseReducer from './ducks/fetch-initialise.duck';
 import loginStatusReducer from './ducks/login-status.duck';
 import setCredentialsREducer from './ducks/set-credentials.duck';
+import setTokensREducer from './ducks/set-tokens.duck';
 import fetchPatientsReducer from './ducks/feth-patients.duck';
 import fetchPatientCountsReducer from './ducks/fetch-patient-counts.duck';
 import fetchUserAccountReducer from './ducks/fetch-user-account.duck';
@@ -28,6 +29,7 @@ let reducers = {
   initialiseData: fetchInitialiseReducer,
   loginStatus: loginStatusReducer,
   credentials: setCredentialsREducer,
+  tokens: setTokensREducer,
   patients: fetchPatientsReducer,
   patientsCounts: fetchPatientCountsReducer,
   userAccount: fetchUserAccountReducer,

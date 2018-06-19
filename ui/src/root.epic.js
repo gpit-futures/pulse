@@ -9,6 +9,7 @@ import { logoutEpic } from './ducks/logout.duck';
 import { fetchLogoutEpic } from './ducks/fetch-logout.duck';
 import { fetchInitialiseEpic } from './ducks/fetch-initialise.duck';
 import { setCredentialsEpic } from './ducks/set-credentials.duck';
+import { setTokensEpic } from './ducks/set-tokens.duck';
 import { fetchPatientsEpic } from './ducks/feth-patients.duck';
 import { fetchPatientCountsEpic } from './ducks/fetch-patient-counts.duck';
 import { fetchUserAccountEpic } from './ducks/fetch-user-account.duck';
@@ -45,6 +46,7 @@ const rootEpic = combineEpics(...[
   fetchLogoutEpic,
   fetchInitialiseEpic,
   setCredentialsEpic,
+  setTokensEpic,
   fetchPatientsEpic,
   fetchPatientCountsEpic,
   fetchUserAccountEpic,

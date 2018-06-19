@@ -16,7 +16,7 @@ export const fetchFeedsDetailEditEpic = (action$, store) =>
   action$.ofType(FETCH_FEEDS_DETAIL_EDIT_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.put(`${usersUrls.FEEDS}/${payload.sourceId}`, payload, {
-        Cookie: store.getState().credentials.cookie,
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .flatMap(({ response }) => {

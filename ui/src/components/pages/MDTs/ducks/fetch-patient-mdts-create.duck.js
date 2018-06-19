@@ -16,7 +16,7 @@ export const fetchPatientMDTsCreateEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_MDTS_CREATE_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.post(`${usersUrls.PATIENTS_URL}/${payload.userId}/mdtreports`, payload, {
-        Cookie: store.getState().credentials.cookie,
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .flatMap(({ response }) => {

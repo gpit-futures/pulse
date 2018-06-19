@@ -15,7 +15,7 @@ export const fetchUserAccountEpic = (action$, store) =>
   action$.ofType(FETCH_USER_ACCOUNT_REQUEST)
     .mergeMap(() =>
       ajax.getJSON(usersUrls.USER_ACCOUNT_URL, {
-        headers: { Cookie: store.getState().credentials.cookie },
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(fetchUserAccountSuccess)
     );

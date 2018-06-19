@@ -14,6 +14,7 @@ import App from './components/containers/App/App';
 import rootReducer from './root.reducer';
 import rootEpic from './root.epic';
 import { initialiseStart } from './ducks/initialise-app.duck';
+import { setTokensStart } from './ducks/set-tokens.duck';
 
 console.log(`App started in ${process.env.NODE_ENV} mode`);
 
@@ -45,6 +46,7 @@ const initialState = {
   profileAppPreferences: {},
   patientsInfo: {},
   requestError: {},
+  tokens: {}
 };
 
 //create store and enhance with middleware
@@ -58,6 +60,21 @@ if (process.env.NODE_ENV === 'production') {
 
 //initialisation
 store.dispatch(initialiseStart());
+
+function isElectron () {
+  return 'Bridge' in window
+}
+
+if (isElectron()) {
+  console.log('is electron app')
+  window.Bridge.updateTokenContext = token => {
+    console.log('token set: ')
+    console.log(token)
+    store.dispatch(setTokensStart(token));
+    console.log('token get: ')
+    console.log(store.getState().tokens.access_tokens)
+  }
+}
 
 render(
   //Provider allows us to receive data from store of our app (by connect function)
