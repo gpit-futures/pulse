@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using Pulse.Domain.PatientDetails.Entities;
 using Pulse.Infrastructure.Mongo;
@@ -21,6 +22,13 @@ namespace Pulse.Infrastructure.PatientDetails
             return this.Collection
                 .Where(x => string.Equals(x.NhsNumber, id))
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<PatientDetail>> GetAll()
+        {
+            return await this.Collection
+                .FindAll()
+                .ToListAsync();
         }
     }
 }

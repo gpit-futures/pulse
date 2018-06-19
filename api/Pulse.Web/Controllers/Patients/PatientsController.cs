@@ -62,6 +62,14 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(patients);
         }
 
+        [Authorize(Policy = "Read")]
+        [HttpGet("detailed")]
+        public async Task<IActionResult> GetPatientsBanners()
+        {
+            var patients = await this.PatientDetails.GetAll();
+            return this.Ok(patients);
+        }
+
         [HttpPost("advancedSearch")]
         public async Task<IActionResult> AdvancedSearch([FromBody] AdvancedSearchRequest request)
         {
