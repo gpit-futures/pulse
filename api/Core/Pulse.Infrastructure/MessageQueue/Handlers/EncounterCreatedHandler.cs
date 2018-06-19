@@ -35,7 +35,7 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
             var clinicalNote = new ClinicalNote
             {
                 ClinicalNotesType = "Encounter",
-                Notes = $"{string.Join(", ", message.Reason.Select(x => x.Text).ToArray())}",
+                Notes = $"Encounter created from INR",
                 PatientId = nhsNumber,
                 DateCreated = DateTime.Parse(message.Meta.LastUpdated),
                 Source = "INR",

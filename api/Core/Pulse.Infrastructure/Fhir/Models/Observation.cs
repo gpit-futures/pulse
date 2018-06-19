@@ -13,16 +13,16 @@ namespace Pulse.Infrastructure.Fhir.Models
 
         public string Status { get; set; }
 
-        public IList<Category> Category { get; set; }
+        public IList<Category> Category { get; set; } = new List<Category>();
 
         public string EffectiveDateTime { get; set; }
 
-        public IList<Performer> Performer { get; set; }
+        public IList<Performer> Performer { get; set; } = new List<Performer>();
 
         public ValueQuantity ValueQuantity { get; set; }
 
         public Interpretation Interpretation { get; set; }
 
-        public IList<ReferenceRange> ReferenceRange { get; set; }
+        public IList<ReferenceRange> ReferenceRange { get; set; } = new List<ReferenceRange>();
     }
 }

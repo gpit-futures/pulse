@@ -43,8 +43,8 @@ namespace Pulse.Web
 
             services.AddAuthorization(conf =>
             {
-                conf.AddPolicy("Read", pol => pol.RequireClaim("FOO_READ"));
-                conf.AddPolicy("Write", pol => pol.RequireClaim("FOO_WRITE"));
+                conf.AddPolicy("Read", pol => pol.RequireClaim("authorities", new []{ "FOO_READ" }));
+                conf.AddPolicy("Write", pol => pol.RequireClaim("authorities", new[] { "FOO_WRITE" }));
             })
             .AddAuthentication(conf =>
             {

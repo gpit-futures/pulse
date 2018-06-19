@@ -54,6 +54,7 @@ namespace Pulse.Web.Controllers.Patients
 
         private IBusClient Bus { get; }
 
+        [Authorize(Policy = "Read")]
         [HttpGet]
         public async Task<IActionResult> GetPatients()
         {
@@ -75,6 +76,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(result);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}")]
         public async Task<IActionResult> GetPatient(string patientId)
         {
@@ -112,6 +114,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(patientResponse);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/banner")]
         public async Task<IActionResult> GetPatientDetails(string patientId)
         {
@@ -125,6 +128,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(patient);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/counts")]
         public async Task<IActionResult> GetPatientCounts(string patientId)
         {
@@ -147,6 +151,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(result);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/clinicalnotes")]
         public async Task<IActionResult> GetPatientClinicalNotes(string patientId)
         {
@@ -169,6 +174,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(clinicalNotes);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/clinicalnotes/{sourceId}")]
         public async Task<IActionResult> GetPatientClinicalNotesDetail(string patientId, string sourceId)
         {
@@ -225,6 +231,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/problems")]
         public async Task<IActionResult> GetPatientProblems(string patientId)
         {
@@ -246,6 +253,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(problems);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/problems/{sourceId}")]
         public async Task<IActionResult> GetPatientProblemDetail(string patientId, string sourceId)
         {
@@ -307,6 +315,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/medications")]
         public async Task<IActionResult> GetPatientMedications(string patientId)
         {
@@ -330,6 +339,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(medications);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/medications/{sourceId}")]
         public async Task<IActionResult> GetPatientMedicationDetail(string patientId, string sourceId)
         {
@@ -397,6 +407,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/contacts")]
         public async Task<IActionResult> GetPatientContacts(string patientId)
         {
@@ -419,6 +430,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(contacts);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/contacts/{sourceId}")]
         public async Task<IActionResult> GetPatientContactDetails(string patientId, string sourceId)
         {
@@ -482,6 +494,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok();
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/allergies")]
         public async Task<IActionResult> GetPatientAllergies(string patientId)
         {
@@ -504,6 +517,7 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(allergies);
         }
 
+        [Authorize(Policy = "Read")]
         [HttpGet("{patientId}/allergies/{sourceId}")]
         public async Task<IActionResult> GetPatientAllergyDetail(string patientId, string sourceId)
         {

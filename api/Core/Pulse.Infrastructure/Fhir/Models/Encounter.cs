@@ -9,12 +9,12 @@ namespace Pulse.Infrastructure.Fhir.Models
 
         public ReferencedConcept Subject { get; set; }
 
-        public IList<ReferencedConcept> Participant { get; set; }
+        public IList<ReferencedConcept> Participant { get; set; } = new List<ReferencedConcept>();
 
         public Period Period { get; set; }
 
-        public IList<CodeableConcept> Reason { get; set; }
+        public IList<CodeableConcept> Reason { get; set; } = new List<CodeableConcept>();
 
-        public IList<ReferencedConcept> Diagnosis { get; set; }
+        public IList<ReferencedConcept> Diagnosis { get; set; } = new List<ReferencedConcept>();
     }
 }

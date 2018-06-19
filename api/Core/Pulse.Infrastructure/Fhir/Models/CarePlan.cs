@@ -17,10 +17,10 @@ namespace Pulse.Infrastructure.Fhir.Models
 
         public ReferencedConcept Context { get; set; }
 
-        public IList<ReferencedConcept> Author { get; set; }
+        public IList<ReferencedConcept> Author { get; set; } = new List<ReferencedConcept>();
 
-        public IList<ReferencedConcept> Addresses { get; set; }
+        public IList<ReferencedConcept> Addresses { get; set; } = new List<ReferencedConcept>();
 
-        public IList<Activity> Activity { get; set; }
+        public IList<Activity> Activity { get; set; } = new List<Activity>();
     }
 }

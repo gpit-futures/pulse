@@ -13,8 +13,8 @@ namespace Pulse.Infrastructure.Fhir.Models
 
         public Meta Meta { get; set; }
 
-        public IList<Issue> Issue { get; set; }
+        public IList<Issue> Issue { get; set; } = new List<Issue>();
 
-        public IList<Identifier> Identifier { get; set; }
+        public IList<Identifier> Identifier { get; set; } = new List<Identifier>();
     }
 }
