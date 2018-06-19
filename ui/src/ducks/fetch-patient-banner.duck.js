@@ -17,7 +17,9 @@ export const fetchPatientBannerError = createAction(FETCH_PATIENT_BANNER_ERROR);
 export const fetchPatientBannerEpic = (action, store) =>
     action.ofType(FETCH_PATIENT_BANNER_REQUEST)
         .mergeMap(({ payload }) =>
-            ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/banner`)
+            ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/banner`, {
+                Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+              })
                 .map(response => fetchPatientBannerSuccess({ userId: payload.userId, banner: response }))
                 .catch(error => Observable.of(fetchPatientBannerError(error)))
         );
