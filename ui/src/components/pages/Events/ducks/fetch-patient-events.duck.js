@@ -21,7 +21,7 @@ export const fetchPatientEventsEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_EVENTS_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/events`, {
-        headers: { Cookie: store.getState().credentials.cookie },
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map((response) => {
           const token = hasTokenInResponse(response);
@@ -37,7 +37,7 @@ export const fetchPatientEventsUpdateEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_EVENTS_UPDATE_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/events`, {
-        headers: { Cookie: store.getState().credentials.cookie },
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .flatMap((response) => {
           const userId = payload.userId;

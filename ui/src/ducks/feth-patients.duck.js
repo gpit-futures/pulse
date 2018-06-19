@@ -15,7 +15,7 @@ export const fetchPatientsEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENTS_REQUEST)
     .mergeMap(() =>
       ajax.getJSON(usersUrls.PATIENTS_URL, {
-        headers: { Cookie: store.getState().credentials.cookie },
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(fetchPatientsSuccess)
     );

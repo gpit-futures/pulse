@@ -18,7 +18,7 @@ export const fetchPatientClinicalStatementsQueryEpic = (action$, store) =>
       if (payload.prefix) { queryString.push(`prefix=${encodeURIComponent(payload.prefix)}`); }
 
       return ajax.getJSON(`/api/contentStore/ts/phrases?${queryString.join('&')}`, {
-        headers: { Cookie: store.getState().credentials.cookie },
+        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(response => fetchPatientClinicalStatementsQuerySuccess({
           userId: payload.userId,
