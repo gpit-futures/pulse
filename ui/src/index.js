@@ -46,7 +46,7 @@ const initialState = {
   profileAppPreferences: {},
   patientsInfo: {},
   requestError: {},
-  tokens: {}
+  tokens: null
 };
 
 //create store and enhance with middleware
@@ -59,9 +59,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 //initialisation
-store.dispatch(initialiseStart());
 
-function isElectron () {
+function isElectron() {
   return 'Bridge' in window
 }
 
@@ -72,18 +71,18 @@ if (isElectron()) {
     console.log(token)
     store.dispatch(setTokensStart(token));
     console.log('token get: ')
-    console.log(store.getState().tokens.access_tokens)
+    console.log(store.getState().tokens.access_token)
+    store.dispatch(initialiseStart());
+    render(
+      //Provider allows us to receive data from store of our app (by connect function)
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Router>
+            <App />
+          </Router>
+        </ConnectedRouter>
+      </Provider>,
+      document.getElementById('app-root'),
+    );
   }
 }
-
-render(
-  //Provider allows us to receive data from store of our app (by connect function)
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Router>
-        <App />
-      </Router>
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById('app-root'),
-);

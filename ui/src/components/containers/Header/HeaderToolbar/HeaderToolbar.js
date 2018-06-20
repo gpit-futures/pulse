@@ -41,7 +41,7 @@ class HeaderToolbar extends PureComponent {
     window.isElectron = function () { return 'Bridge' in window; };
     if (isElectron()) {
         window.Bridge.setPatientContext(null);
-        console.log('called setPatientContext with : ' + convertToFhir(payload.banner));
+        console.log('called setPatientContext with : ' + null);
     } else {
         console.log('did not load preload script - App not running in an Electron Context')
     }
