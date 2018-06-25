@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Pulse.Infrastructure.MessageQueue;
 using Pulse.Infrastructure.MessageQueue.Messages;
 using RawRabbit;
+using RawRabbit.ErrorHandling;
 using RawRabbit.vNext;
 
 namespace Pulse.Web
@@ -23,24 +24,19 @@ namespace Pulse.Web
         public static IBusClient SetupMessageSubscriptions(IServiceCollection services, IContainer container)
         {
             var bus = BusClientFactory.CreateDefault(services);
-            var assembly = System.Reflection.Assembly
-                .GetAssembly(typeof(Pulse.Infrastructure.StartupTask))
-                .GetTypes();
-
-            //var handlers = assembly.Where(t => t.IsClass && t.Namespace == "Pulse.Infrastructure.MessageQueue.Handlers");
-
-            //foreach (var handler in handlers)
-            //{
-            //    var baseType = handler.BaseType;
-            //    var message = baseType.GenericTypeArguments[0];
-            //    //var mssg
-
-            //    container
-            //}
+            //var assembly = System.Reflection.Assembly
+            //    .GetAssembly(typeof(Pulse.Infrastructure.StartupTask))
+            //    .GetTypes();
 
             bus.SubscribeAsync<ObservationCreated>((message, context) =>
             {
                 var handler = container.Resolve<IMessageHandler<ObservationCreated>>();
+                return handler.Handle(message);
+            }, config => config.WithSubscriberId(string.Empty));
+
+            bus.SubscribeAsync<ObservationUpdated>((message, context) =>
+            {
+                var handler = container.Resolve<IMessageHandler<ObservationUpdated>>();
                 return handler.Handle(message);
             }, config => config.WithSubscriberId(string.Empty));
 
@@ -61,6 +57,11 @@ namespace Pulse.Web
                 var handler = container.Resolve<IMessageHandler<PatientCreated>>();
                 return handler.Handle(plan);
             }, config => config.WithSubscriberId(string.Empty));
+
+            //bus.SubscribeAsync<HandlerExceptionMessage>((message, context) =>
+            //{
+
+            //});
 
             return bus;
         }
