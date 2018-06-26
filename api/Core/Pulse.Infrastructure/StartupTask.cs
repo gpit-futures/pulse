@@ -29,6 +29,7 @@ namespace Pulse.Infrastructure
 
 
             services.AddTransient<IMessageHandler<ObservationCreated>, ObservationCreatedHandler>();
+            services.AddTransient<IMessageHandler<ObservationUpdated>, ObservationUpdatedHandler>();
             services.AddTransient<IMessageHandler<CarePlanCreated>, CarePlanCreatedHandler>();
             services.AddTransient<IMessageHandler<PatientCreated>, PatientCreatedHandler>();
             services.AddTransient<IMessageHandler<EncounterCreated>, EncounterCreatedHandler>();

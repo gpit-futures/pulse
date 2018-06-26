@@ -39,7 +39,7 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
             }
 
             observation.Author = message.Performer[0].Display;
-            observation.Notes = $"UPDATED: {message.Code.Coding[0].Display}. {message.ValueQuantity.Value}";
+            observation.Notes = $"AMENDED: {message.Code.Coding[0].Display}. {message.ValueQuantity.Value}";
             observation.DateCreated = DateTime.Parse(message.Meta.LastUpdated);
 
             await this.ClinicalNotes.AddOrUpdate(observation);
