@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Threading.Tasks;
+using Hl7.Fhir.Model;
 using Pulse.Infrastructure.EntryItems;
 using Pulse.Infrastructure.MessageQueue.Messages;
 using Pulse.Infrastructure.Patients;
+using Task = System.Threading.Tasks.Task;
 
 namespace Pulse.Infrastructure.MessageQueue.Handlers
 {
-    public class ObservationUpdatedHandler : MessageHandler<ObservationUpdated>
+    public class ObservationUpdatedHandler : MessageHandlerBase<Observation>, IMessageHandler<ObservationUpdated>
     {
         public ObservationUpdatedHandler(
             IClinicalNoteRepository clinicalNotes, 
@@ -20,9 +21,11 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
 
         private IPatientRepository Patients { get; }
 
-        public override async Task Handle(ObservationUpdated message)
+        public async Task Handle(ObservationUpdated message)
         {
-            var nhsNumber = message.Subject.Identifier.Value;
+            var obj = this.ParseMessage(message);
+
+            var nhsNumber = obj.Subject.Identifier.Value;
             var patient = await this.Patients.GetOne(nhsNumber);
 
             if (patient == null)
@@ -30,7 +33,7 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
                 return;
             }
 
-            var observationId = message.Identifier[0].Value;
+            var observationId = obj.Identifier[0].Value;
             var observation = await this.ClinicalNotes.GetOne(nhsNumber, $"{observationId}");
 
             if (observation == null)
@@ -38,9 +41,11 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
                 return;
             }
 
-            observation.Author = message.Performer[0].Display;
-            observation.Notes = $"AMENDED: {message.Code.Coding[0].Display}. {message.ValueQuantity.Value}";
-            observation.DateCreated = DateTime.Parse(message.Meta.LastUpdated);
+            var value = (SimpleQuantity)obj.Value;
+
+            observation.Author = obj.Performer[0].Display;
+            observation.Notes = $"AMENDED: {obj.Code.Coding[0].Display}. Value: {value.Value}. Unit: {value.Unit}.";
+            observation.DateCreated = obj.Meta?.LastUpdated?.DateTime ?? DateTime.UtcNow;
 
             await this.ClinicalNotes.AddOrUpdate(observation);
         }

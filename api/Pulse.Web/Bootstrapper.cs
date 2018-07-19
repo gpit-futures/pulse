@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Pulse.Infrastructure.MessageQueue;
 using Pulse.Infrastructure.MessageQueue.Messages;
 using RawRabbit;
-using RawRabbit.ErrorHandling;
 using RawRabbit.vNext;
 
 namespace Pulse.Web
@@ -24,9 +22,6 @@ namespace Pulse.Web
         public static IBusClient SetupMessageSubscriptions(IServiceCollection services, IContainer container)
         {
             var bus = BusClientFactory.CreateDefault(services);
-            //var assembly = System.Reflection.Assembly
-            //    .GetAssembly(typeof(Pulse.Infrastructure.StartupTask))
-            //    .GetTypes();
 
             bus.SubscribeAsync<ObservationCreated>((message, context) =>
             {
@@ -46,22 +41,17 @@ namespace Pulse.Web
                 return handler.Handle(plan);
             }, config => config.WithSubscriberId(string.Empty));
 
-            bus.SubscribeAsync<EncounterCreated>((plan, context) =>
-            {
-                var handler = container.Resolve<IMessageHandler<EncounterCreated>>();
-                return handler.Handle(plan);
-            }, config => config.WithSubscriberId(string.Empty));
-
-            bus.SubscribeAsync<PatientCreated>((plan, context) =>
-            {
-                var handler = container.Resolve<IMessageHandler<PatientCreated>>();
-                return handler.Handle(plan);
-            }, config => config.WithSubscriberId(string.Empty));
-
-            //bus.SubscribeAsync<HandlerExceptionMessage>((message, context) =>
+            //bus.SubscribeAsync<EncounterCreated>((plan, context) =>
             //{
+            //    var handler = container.Resolve<IMessageHandler<EncounterCreated>>();
+            //    return handler.Handle(plan);
+            //}, config => config.WithSubscriberId(string.Empty));
 
-            //});
+            //bus.SubscribeAsync<PatientCreated>((plan, context) =>
+            //{
+            //    var handler = container.Resolve<IMessageHandler<PatientCreated>>();
+            //    return handler.Handle(plan);
+            //}, config => config.WithSubscriberId(string.Empty));
 
             return bus;
         }

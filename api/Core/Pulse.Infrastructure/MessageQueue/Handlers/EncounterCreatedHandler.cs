@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+using Hl7.Fhir.Model;
 using Pulse.Domain.EntryItems.Entities;
 using Pulse.Infrastructure.EntryItems;
 using Pulse.Infrastructure.MessageQueue.Messages;
 using Pulse.Infrastructure.Patients;
+using Task = System.Threading.Tasks.Task;
 
 namespace Pulse.Infrastructure.MessageQueue.Handlers
 {
-    public class EncounterCreatedHandler : IMessageHandler<EncounterCreated>
+    public class EncounterCreatedHandler : MessageHandlerBase<Encounter>, IMessageHandler<EncounterCreated>
     {
         public EncounterCreatedHandler(
             IClinicalNoteRepository clinicalNotes,
@@ -24,7 +24,9 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
 
         public async Task Handle(EncounterCreated message)
         {
-            var nhsNumber = message.Subject.Identifier.Value;
+            var obj = this.ParseMessage(message);
+
+            var nhsNumber = obj.Subject.Identifier.Value;
             var patient = await this.Patients.GetOne(nhsNumber);
 
             if (patient == null)
@@ -37,9 +39,9 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
                 ClinicalNotesType = "Encounter",
                 Notes = $"Encounter created from INR",
                 PatientId = nhsNumber,
-                DateCreated = DateTime.Parse(message.Meta.LastUpdated),
+                DateCreated = obj.Meta?.LastUpdated?.DateTime ?? DateTime.UtcNow,
                 Source = "INR",
-                SourceId = message.Identifier[0].Value
+                SourceId = obj.Identifier[0].Value
             };
 
             await this.ClinicalNotes.AddOrUpdate(clinicalNote);

@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Threading.Tasks;
+using Hl7.Fhir.Model;
 using Pulse.Domain.EntryItems.Entities;
 using Pulse.Infrastructure.EntryItems;
 using Pulse.Infrastructure.MessageQueue.Messages;
 using Pulse.Infrastructure.Patients;
+using Task = System.Threading.Tasks.Task;
 
 namespace Pulse.Infrastructure.MessageQueue.Handlers
 {
-    public class ObservationCreatedHandler : MessageHandler<ObservationCreated>
+    public class ObservationCreatedHandler : MessageHandlerBase<Observation>, IMessageHandler<ObservationCreated>
     {
         public ObservationCreatedHandler(
             IClinicalNoteRepository clinicalNotes, 
@@ -21,9 +22,11 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
 
         private IPatientRepository Patients { get; }
 
-        public override async Task Handle(ObservationCreated message)
+        public async Task Handle(ObservationCreated message)
         {
-            var nhsNumber = message.Subject.Identifier.Value;
+            var obj = this.ParseMessage(message);
+
+            var nhsNumber = obj.Subject.Identifier.Value;
             var patient = await this.Patients.GetOne(nhsNumber);
 
             if (patient == null)
@@ -31,15 +34,17 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
                 return;
             }
 
+            var value = (SimpleQuantity)obj.Value;
+
             var clinicalNote = new ClinicalNote
             {
                 ClinicalNotesType = "Observation",
-                Notes = $"{message.Code.Coding[0].Display}. {message.ValueQuantity.Value}",
+                Notes = $"{obj.Code.Coding[0].Display}. Value: {value.Value}. Unit: {value.Unit}.",
                 PatientId = nhsNumber,
-                Author = message.Performer[0].Display,
-                DateCreated = DateTime.Parse(message.Meta.LastUpdated),
+                Author = obj.Performer[0].Display,
+                DateCreated = obj.Meta?.LastUpdated?.DateTime ?? DateTime.UtcNow,
                 Source = "INR",
-                SourceId = message.Identifier[0].Value
+                SourceId = obj.Identifier[0].Value
             };
 
             await this.ClinicalNotes.AddOrUpdate(clinicalNote);

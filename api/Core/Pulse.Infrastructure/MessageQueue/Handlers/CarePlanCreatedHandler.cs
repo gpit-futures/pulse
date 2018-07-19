@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using Hl7.Fhir.Model;
 using Pulse.Domain.EntryItems.Entities;
 using Pulse.Infrastructure.EntryItems;
 using Pulse.Infrastructure.MessageQueue.Messages;
 using Pulse.Infrastructure.Patients;
+using Task = System.Threading.Tasks.Task;
 
 namespace Pulse.Infrastructure.MessageQueue.Handlers
 {
-    public class CarePlanCreatedHandler : MessageHandler<CarePlanCreated>
+    public class CarePlanCreatedHandler : MessageHandlerBase<CarePlan>, IMessageHandler<CarePlanCreated>
     {
         public CarePlanCreatedHandler(
             IClinicalNoteRepository clinicalNotes, 
@@ -22,9 +23,11 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
 
         private IPatientRepository Patients { get; }
 
-        public override async Task Handle(CarePlanCreated message)
+        public async Task Handle(CarePlanCreated message)
         {
-            var nhsNumber = message.Subject.Identifier.Value;
+            var obj = this.ParseMessage(message);
+
+            var nhsNumber = obj.Subject.Identifier.Value;
             var patient = await this.Patients.GetOne(nhsNumber);
 
             if (patient == null)
@@ -32,19 +35,19 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
                 return;
             }
 
-            var activity = message.Activity.Select(x =>
-                $"{x.Detail.Status} {x.Detail.ProductCodeableConcept.Coding[0].Display}")
+            var activity = obj.Activity.Select(x =>
+                    $"{((CodeableConcept)x.Detail.Product).Coding[0].Display} ({((CodeableConcept)x.Detail.Product).Coding[0].Code}) - {x.Detail.Status}")
                 .ToArray();
 
             var clinicalNote = new ClinicalNote
             {
                 ClinicalNotesType = "Care Plan",
-                Notes = $"{message.Title}. {message.Period.Start} - {message.Period.End}. {string.Join(", ", activity)}",
+                Notes = $"{obj.Title}. {obj.Period.Start} to {obj.Period.End}. {string.Join(", ", activity)}",
                 PatientId = nhsNumber,
-                Author = message.Author[0].Display,
-                DateCreated = DateTime.Parse(message.Meta.LastUpdated),
+                Author = obj.Author[0].Display,
+                DateCreated = obj.Meta?.LastUpdated?.DateTime ?? DateTime.UtcNow,
                 Source = "INR",
-                SourceId = message.Identifier[0].Value
+                SourceId = obj.Identifier[0].Value
             };
 
             await this.ClinicalNotes.AddOrUpdate(clinicalNote);

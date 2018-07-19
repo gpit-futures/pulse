@@ -1,13 +1,17 @@
-﻿using Pulse.Infrastructure.Fhir.Models;
+﻿using System.Collections.Generic;
 using RawRabbit.Attributes;
-using RawRabbit.Configuration.Exchange;
 
 namespace Pulse.Infrastructure.MessageQueue.Messages
 {
-    [Exchange(Type = ExchangeType.Direct, Name = "patient.exchange")]
+    [Exchange(Name = "patient.exchange")]
     [Routing(RoutingKey = "patient.created", NoAck = true)]
     [Queue(Name = "created-patients-queue", Durable = true)]
-    public class PatientCreated : Patient
+    public class PatientCreated : IMessage
     {
+        public string Source { get; set; }
+
+        public string Destination { get; set; }
+
+        public Dictionary<string, dynamic> Body { get; set; }
     }
 }

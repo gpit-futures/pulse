@@ -1,13 +1,17 @@
-﻿using Pulse.Infrastructure.Fhir.Models;
+﻿using System.Collections.Generic;
 using RawRabbit.Attributes;
-using RawRabbit.Configuration.Exchange;
 
 namespace Pulse.Infrastructure.MessageQueue.Messages
 {
-    [Exchange(Type = ExchangeType.Direct, Name = "observation.exchange")]
+    [Exchange(Name = "observation.exchange")]
     [Routing(RoutingKey = "observation.updated", NoAck = true)]
     [Queue(Name = "updated-observation-queue", Durable = true)]
-    public class ObservationUpdated : Observation
+    public class ObservationUpdated : IMessage
     {
+        public string Source { get; set; }
+
+        public string Destination { get; set; }
+
+        public Dictionary<string, dynamic> Body { get; set; }
     }
 }
