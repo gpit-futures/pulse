@@ -40,7 +40,7 @@ export function convertToFhir(patient) {
               patient.address.line2
             ],
             "city": patient.address.line3,
-            "district": "  ",
+            "district": "test",
             "postalCode": patient.address.postcode
           }
         ],
