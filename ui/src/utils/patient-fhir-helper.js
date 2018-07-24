@@ -27,11 +27,6 @@ export function convertToFhir(patient) {
             "system": "phone",
             "value": patient.phone,
             "use": "home"
-          },
-          {
-            "system": "email",
-            "value": "",
-            "use": ""
           }
         ],
         "gender": patient.gender.toLowerCase(),
