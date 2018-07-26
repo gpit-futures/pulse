@@ -15,14 +15,14 @@ namespace Pulse.Web
 {
     public class Startup
     {
+        private IContainer _applicationContainer;
+
+        private IBusClient _bus;
+
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
-
-        private IContainer _applicationContainer;
-
-        private IBusClient _bus;
 
         public IConfiguration Configuration { get; }
 
@@ -34,17 +34,14 @@ namespace Pulse.Web
             StartupTask.Register(services);
 
             services.AddRawRabbit(config => config.AddJsonFile("rabbitmq.json"),
-                ioc =>
-                {
-                    ioc.AddSingleton<IConfigurationEvaluator, AttributeConfigEvaluator>();
-                });
+                ioc => { ioc.AddSingleton<IConfigurationEvaluator, AttributeConfigEvaluator>(); });
 
             var token = this.Configuration.GetSection("Jwk").Get<JsonWebKey>();
 
             services.AddAuthorization(conf =>
             {
-                conf.AddPolicy("Read", pol => pol.RequireClaim("authorities", new []{ "FOO_READ" }));
-                conf.AddPolicy("Write", pol => pol.RequireClaim("authorities", new[] { "FOO_WRITE" }));
+                conf.AddPolicy("Read", pol => pol.RequireClaim("authorities", "FOO_READ"));
+                conf.AddPolicy("Write", pol => pol.RequireClaim("authorities", "FOO_WRITE"));
             })
             .AddAuthentication(conf =>
             {
@@ -63,6 +60,7 @@ namespace Pulse.Web
 
             this._applicationContainer = Bootstrapper.SetupContainer(services);
             this._bus = Bootstrapper.SetupMessageSubscriptions(services, this._applicationContainer);
+            Bootstrapper.CreateIndexes(this._applicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,14 +72,13 @@ namespace Pulse.Web
             }
 
             app.UseStaticFiles();
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}");
+                    "default",
+                    "{controller=Home}/{action=Index}");
             });
 
             lifetime.ApplicationStopped.Register(() =>

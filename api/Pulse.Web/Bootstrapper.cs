@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Pulse.Infrastructure.MessageQueue;
@@ -54,6 +57,12 @@ namespace Pulse.Web
             //}, config => config.WithSubscriberId(string.Empty));
 
             return bus;
+        }
+
+        public static void CreateIndexes(IContainer container)
+        {
+            var tasks = container.Resolve<Pulse.Infrastructure.Mongo.IMongoIndexBuilder> ();
+            Task.WaitAll(tasks.Start());
         }
     }
 }

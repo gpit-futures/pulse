@@ -44,5 +44,13 @@ namespace Pulse.Infrastructure.Patients
         {
             return this.Collection.AddOrUpdate(item);
         }
+
+        public async Task<IEnumerable<Patient>> Search(string criteria)
+        {
+            var filter = Builders<Patient>.Filter.Text(criteria, new TextSearchOptions {CaseSensitive = false});
+            var items = await this.Collection.FindAsync(filter);
+
+            return await items.ToListAsync();
+        }
     }
 }

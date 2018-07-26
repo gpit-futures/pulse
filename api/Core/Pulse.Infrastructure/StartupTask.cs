@@ -27,6 +27,8 @@ namespace Pulse.Infrastructure
             services.AddScoped<ITestResultRepository, TestResultRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
 
+            services.AddScoped<IMongoIndexBuilder, MongoIndexBuilder>();
+
 
             services.AddTransient<IMessageHandler<ObservationCreated>, ObservationCreatedHandler>();
             services.AddTransient<IMessageHandler<ObservationUpdated>, ObservationUpdatedHandler>();
