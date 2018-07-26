@@ -5,7 +5,7 @@ namespace Pulse.Infrastructure.MessageQueue.Messages
 {
     [Exchange(Name = "observation.exchange")]
     [Routing(RoutingKey = "observation.updated", NoAck = true)]
-    [Queue(Name = "updated-observation-queue", Durable = true)]
+    [Queue(Name = "core-updated-observation-queue", Durable = true)]
     public class ObservationUpdated : IMessage
     {
         public string Source { get; set; }

@@ -1,7 +1,7 @@
 ﻿{
     "VirtualHost": "/",
-    "Username": "admin",
-    "Password": "bYcrPtmXazwc3dBkRQuZ",
+    "Username": "core",
+    "Password": "1CORE",
     "Port": 5672,
     "Hostnames": [ "ec2-35-177-15-201.eu-west-2.compute.amazonaws.com" ],
     "RequestTimeout": "00:00:10",
