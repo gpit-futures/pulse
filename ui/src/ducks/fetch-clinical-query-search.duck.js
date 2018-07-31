@@ -15,7 +15,7 @@ export const fetchClinicalQuerySearchEpic = (action$, store) =>
   action$.ofType(FETCH_CLINICAL_QUERY_SEARCH_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.post(usersUrls.CLINICAL_QUERY_SEARCH, payload, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
+        Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .map(({ response }) => fetchClinicalQuerySearchSuccess(response))

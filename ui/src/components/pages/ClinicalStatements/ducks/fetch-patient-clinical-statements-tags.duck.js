@@ -14,7 +14,7 @@ export const fetchPatientClinicalStatementsTagsEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_CLINICAL_STATEMENTS_TAGS_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON('api/contentStore/ts/tags', {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(response => fetchPatientClinicalStatementsTagsSuccess({
           userId: payload.userId,

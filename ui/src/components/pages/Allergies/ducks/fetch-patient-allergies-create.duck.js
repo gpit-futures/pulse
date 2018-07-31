@@ -16,7 +16,7 @@ export const fetchPatientAllergiesCreateEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_ALLERGIES_CREATE_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.post(`${usersUrls.PATIENTS_URL}/${payload.userId}/allergies`, payload, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
+        Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .flatMap(({ response }) => {

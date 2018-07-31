@@ -16,7 +16,7 @@ export const fetchProfileAppPreferencesEpic = (action$, store) =>
   action$.ofType(FETCH_PROFILE_APP_PREFERENCES_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.post(usersUrls.PROFILE_APP_PREFERENCES, payload, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
+        Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .map(({ response }) => fetchProfileAppPreferencesSuccess(response))

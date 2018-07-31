@@ -15,7 +15,7 @@ export const fetchBasicPatientSearchEpic = (action$, store) =>
   action$.ofType(FETCH_BASIC_PATIENT_SEARCH_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.post(usersUrls.BASIC_PATIENT_SEARCH, payload, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
+        Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .map(({ response }) => fetchBasicPatientSearchSuccess(response))

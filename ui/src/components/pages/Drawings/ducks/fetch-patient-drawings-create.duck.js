@@ -16,7 +16,7 @@ export const fetchPatientDrawingsCreateEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_DRAWINGS_CREATE_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.post(`${usersUrls.PICTURES}/${payload.userId}`, payload, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
+        Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .flatMap(({ response }) => {

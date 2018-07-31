@@ -16,7 +16,7 @@ export const fetchPatientCountsFailure = createAction(FETCH_PATIENT_COUNTS_FAILU
 const mergeObjects = _.reduce(_.merge, {});
 const createPatientCountsUrl = id => `${usersUrls.PATIENTS_URL}/${id}/counts`;
 const fetchPatientCounts$ = (id, store) => ajax.getJSON(createPatientCountsUrl(id), {
-  Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+  Authorization: 'Bearer ' + store.getState().tokens.access_token
 })
   .map(response => ({ [id]: response }));
 

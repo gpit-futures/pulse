@@ -15,7 +15,7 @@ export const fetchListOrdersEpic = (action$, store) =>
   action$.ofType(FETCH_LIST_ORDERS_REQUEST)
     .mergeMap(() =>
       ajax.getJSON(usersUrls.LIST_ORDERS, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(fetchListOrdersSuccess)
     );
