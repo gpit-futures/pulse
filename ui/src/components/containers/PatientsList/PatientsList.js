@@ -79,6 +79,7 @@ export default class PatientsList extends PureComponent {
         }
       
         window.Bridge.endPatientContext = patient => {
+          this.setState({ isDisclaimerModalVisible: false });
           this.context.router.history.push("/");
         }
       }
