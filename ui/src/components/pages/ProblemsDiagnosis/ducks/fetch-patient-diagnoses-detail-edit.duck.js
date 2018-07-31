@@ -16,7 +16,7 @@ export const fetchPatientDiagnosesDetailEditEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_DIAGNOSES_DETAIL_EDIT_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.put(`${usersUrls.PATIENTS_URL}/${payload.userId}/problems/${payload.sourceId}`, payload, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token, 
+        Authorization: 'Bearer ' + store.getState().tokens.access_token, 
         'Content-Type': 'application/json',
       })
         .flatMap(({ response }) => {

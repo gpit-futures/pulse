@@ -20,7 +20,7 @@ export const fetchPatientClinicalNotesEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_CLINICAL_NOTES_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/clinicalnotes`, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map((response) => {
           const token = hasTokenInResponse(response);
@@ -36,7 +36,7 @@ export const fetchPatientClinicalNotesUpdateEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_CLINICAL_NOTES_UPDATE_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/clinicalnotes`, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .flatMap((response) => {
           const userId = payload.userId;

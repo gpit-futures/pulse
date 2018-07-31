@@ -245,7 +245,7 @@ export default class ClinicalNotes extends PureComponent {
             <div className="panel panel-primary">
               <PluginListHeader
                 onFilterChange={this.handleFilterChange}
-                panelTitle="Clinical Notes"
+                panelTitle="Observations"
                 isBtnExpandVisible={isBtnExpandVisible}
                 isBtnTableVisible
                 name={CLINICAL_NOTES_MAIN}

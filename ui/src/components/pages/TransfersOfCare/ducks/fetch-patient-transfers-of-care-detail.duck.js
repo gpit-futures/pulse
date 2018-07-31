@@ -16,7 +16,7 @@ export const fetchPatientTransfersOfCareDetailEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_TRANSFERS_OF_CARE_DETAIL_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/events/toc/${payload.sourceId}`, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(response => fetchPatientTransfersOfCareDetailSuccess({
           userId: payload.userId,

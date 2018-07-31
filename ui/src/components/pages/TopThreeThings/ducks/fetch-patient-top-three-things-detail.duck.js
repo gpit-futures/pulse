@@ -16,7 +16,7 @@ export const fetchPatientTopThreeThingsDetailEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENT_TOP_THREE_THINGS_DETAIL_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/top3Things/${payload.sourceId}`, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(response => fetchPatientTopThreeThingsDetailSuccess({
           userId: payload.userId,

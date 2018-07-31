@@ -16,7 +16,7 @@ export const fetchFeedsDetailEpic = (action$, store) =>
   action$.ofType(FETCH_FEEDS_DETAIL_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.FEEDS}/${payload.sourceId}`, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(response => fetchFeedsDetailSuccess({
           feedsDetail: response,

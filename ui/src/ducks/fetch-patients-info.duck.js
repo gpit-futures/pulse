@@ -15,7 +15,7 @@ export const fetchPatientsInfoEpic = (action$, store) =>
   action$.ofType(FETCH_PATIENTS_INFO_REQUEST)
     .mergeMap(() =>
       ajax.getJSON(usersUrls.PROFILE_APP_PREFERENCES, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .map(fetchPatientsInfoSuccess)
     );

@@ -18,7 +18,7 @@ export const fetchSeriesEpic = (action$, store) =>
   action$.ofType(FETCH_SERIES_REQUEST)
     .mergeMap(({ payload }) =>
       ajax.getJSON(`${usersUrls.PATIENTS_URL}/${payload.userId}/dicom/studies/${payload.studyId}/series?source=${payload.source}`, {
-        Cookie: store.getState().credentials.cookie, Authorization: 'Bearer ' + store.getState().tokens.access_token
+        Authorization: 'Bearer ' + store.getState().tokens.access_token
       })
         .flatMap((response) => {
           const userId = payload.userId;

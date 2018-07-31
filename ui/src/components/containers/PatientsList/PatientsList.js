@@ -12,6 +12,12 @@ import { clientUrls } from '../../../config/client-urls.constants';
 import { getDDMMMYYYY } from '../../../utils/time-helpers.utils';
 import { operationsOnCollection } from '../../../utils/plugin-helpers.utils';
 
+const STYLE = {
+  textCenter: {
+      textAlign: 'center'
+  }
+};
+
 export default class PatientsList extends PureComponent {
     static propTypes = {
       allPatients: PropTypes.arrayOf(
@@ -66,6 +72,17 @@ export default class PatientsList extends PureComponent {
 
     componentWillMount() {
       document.addEventListener('click', this.handleNoDropdownClick, false);
+
+      if (this.isElectron()) {
+        window.Bridge.updatePatientContext = patient => {
+          this.handlePatientViewClick(patient.identifier[0].value)
+        }
+      
+        window.Bridge.endPatientContext = patient => {
+          this.context.router.history.push("/");
+        }
+      }
+
     }
 
     componentWillUnmount() {
@@ -97,6 +114,10 @@ export default class PatientsList extends PureComponent {
     handleFilterChange = ({ target: { value } }) => this.setState({ nameShouldInclude: _.toLower(value) });
 
     handleColumnsSelected = /* istanbul ignore next */ selectedColumns => this.setState({ selectedColumns });
+
+    isElectron() {
+      return 'Bridge' in window;
+    }
 
     handlePatientViewClick = /* istanbul ignore next */ (userId, candidatePluginName) => {
       //TODO move to util function, some conjunction & disjunction magic at 12 am
@@ -168,14 +189,15 @@ export default class PatientsList extends PureComponent {
 
       return (
         <div className="patients-list">
+        <h1 style={STYLE.textCenter}>No patient selected</h1>
           <div className="panel panel-primary">
-            <PatientsListHeader
+            {/* <PatientsListHeader
               onFilterChange={this.handleFilterChange}
               onColumnsSelected={this.handleColumnsSelected}
               selectedColumns={selectedColumns}
               panelTitle={titleForPanel}
-            />
-            <div className="panel-body">
+            /> */}
+            {/* <div className="panel-body">
               <div className="wrap-patients-table">
                 <SortableTablePatients
                   headers={columnsToShowConfig}
@@ -199,7 +221,7 @@ export default class PatientsList extends PureComponent {
                 />
               </div>
               }
-            </div>
+            </div> */}
             {isDisclaimerModalVisible && <PatientAccessDisclaimerModal
               onClose={this.toggleDisclaimerModalVisible}
               onAgreeRedirectTo={patientPath}

@@ -37,14 +37,6 @@ class HeaderToolbar extends PureComponent {
   toggleSidebarVisibility = /* istanbul ignore next */ () => this.props.actions.setSidebarVisibility(!this.props.isSidebarVisible);
 
   componentWillUnmount() {
-    // fire patient context changed event
-    window.isElectron = function () { return 'Bridge' in window; };
-    if (isElectron()) {
-        window.Bridge.setPatientContext(null);
-        console.log('called setPatientContext with : ' + null);
-    } else {
-        console.log('did not load preload script - App not running in an Electron Context')
-    }
   }
 
   render() {

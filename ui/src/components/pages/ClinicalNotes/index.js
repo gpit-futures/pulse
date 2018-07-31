@@ -24,7 +24,7 @@ const reducers = {
   clinicalNotesCreate,
 };
 
-const sidebarConfig = { key: 'clinicalNotes', pathToTransition: '/clinicalNotes', name: 'Clinical Notes', isVisible: true };
+const sidebarConfig = { key: 'clinicalNotes', pathToTransition: '/clinicalNotes', name: 'Observations', isVisible: true };
 
 const routers = [
   { key: 'clinicalNotes', component: ClinicalNotes, path: `${clientUrls.PATIENTS}/:userId/${clientUrls.CLINICAL_NOTES}` },
