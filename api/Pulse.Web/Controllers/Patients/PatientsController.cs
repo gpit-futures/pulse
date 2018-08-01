@@ -70,19 +70,19 @@ namespace Pulse.Web.Controllers.Patients
             return this.Ok(patients);
         }
 
-        [HttpPost("advancedSearch")]
-        public async Task<IActionResult> AdvancedSearch([FromBody] AdvancedSearchRequest request)
-        {
-            var result = new List<AdvancedQuerySearchResponse>();
-            return this.Ok(result);
-        }
+        //[HttpPost("advancedSearch")]
+        //public async Task<IActionResult> AdvancedSearch([FromBody] AdvancedSearchRequest request)
+        //{
+        //    var result = new List<AdvancedQuerySearchResponse>();
+        //    return this.Ok(result);
+        //}
 
-        [HttpPost("querySearch")]
-        public async Task<IActionResult> QuerySearch([FromBody] QuerySearchRequest request)
-        {
-            var result = new List<AdvancedQuerySearchResponse>();
-            return this.Ok(result);
-        }
+        //[HttpPost("querySearch")]
+        //public async Task<IActionResult> QuerySearch([FromBody] QuerySearchRequest request)
+        //{
+        //    var result = new List<AdvancedQuerySearchResponse>();
+        //    return this.Ok(result);
+        //}
 
         [Authorize(Policy = "Read")]
         [HttpGet("{patientId}")]

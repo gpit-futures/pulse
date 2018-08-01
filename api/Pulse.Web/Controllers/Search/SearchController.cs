@@ -13,7 +13,7 @@ using Patient = Pulse.Domain.Patients.Entities.Patient;
 namespace Pulse.Web.Controllers.Search
 {
     [Produces("application/json")]
-    //[Authorize(Policy = "Read")]
+    [Authorize(Policy = "Read")]
     [Route("api/search")]
     public class SearchController : Controller
     {
@@ -35,6 +35,11 @@ namespace Pulse.Web.Controllers.Search
         [HttpPost("patients")]
         public async Task<IActionResult> MainSearch([FromBody] MainSearchRequest request)
         {
+            if (request?.SearchString == null)
+            {
+                return this.Ok(new MainSearchResponse());
+            }
+
             var patients = await this.Patients.Search(request.SearchString);
 
             if (patients == null)
