@@ -1,0 +1,39 @@
+version: "3"
+services:
+  pulse-web:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3101:80"
+    links:
+      - pulse-db
+    depends_on:
+      - pulse-db
+      - pulse-migrate
+    networks:
+      - pulse-network
+  pulse-migrate:
+    build:
+      context: ./api
+      dockerfile: Dockerfile-migrate
+    links:
+      - pulse-db
+    depends_on:
+      - pulse-db
+    networks:
+      - pulse-network
+  pulse-db:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data:/data
+    command: mongod --smallfiles --logpath=/dev/null --quiet
+    networks:
+      - pulse-network
+
+networks:
+  pulse-network:
+    driver: bridge
