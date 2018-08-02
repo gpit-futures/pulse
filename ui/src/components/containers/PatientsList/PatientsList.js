@@ -135,7 +135,8 @@ export default class PatientsList extends PureComponent {
       }
 
       const path = `${clientUrls.PATIENTS}/${userId}/${clientUrls.PATIENTS_SUMMARY}`;
-      this.setState({ patientPath: path, isDisclaimerModalVisible: true });
+      this.setState({ patientPath: path, isDisclaimerModalVisible: false });
+      this.context.router.history.push(path);
     };
 
     toggleDisclaimerModalVisible = /* istanbul ignore next */ () => this.setState(prevState => ({ isDisclaimerModalVisible: !prevState.isDisclaimerModalVisible }));
