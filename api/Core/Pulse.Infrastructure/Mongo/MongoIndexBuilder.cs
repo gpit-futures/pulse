@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MongoDB.Driver;
-using Pulse.Domain.Patients.Entities;
+using Pulse.Domain.PatientDetails.Entities;
 
 namespace Pulse.Infrastructure.Mongo
 {
@@ -17,9 +16,12 @@ namespace Pulse.Infrastructure.Mongo
         public async Task Start()
         {
             await this.Database
-                .GetCollection<Patient>("patients")
+                .GetCollection<PatientDetail>("patientDetails")
                 .Indexes
-                .CreateOneAsync(Builders<Patient>.IndexKeys.Text(p => p.Name).Text(p => p.NhsNumber));
+                .CreateOneAsync(Builders<PatientDetail>.IndexKeys
+                    .Text(p => p.FirstName)
+                    .Text(p => p.LastName)
+                    .Text(p => p.NhsNumber));
         }
     }
 }

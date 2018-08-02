@@ -30,5 +30,13 @@ namespace Pulse.Infrastructure.PatientDetails
                 .FindAll()
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<PatientDetail>> Search(string criteria)
+        {
+            var filter = Builders<PatientDetail>.Filter.Text(criteria, new TextSearchOptions { CaseSensitive = false });
+            var items = await this.Collection.FindAsync(filter);
+
+            return await items.ToListAsync();
+        }
     }
 }

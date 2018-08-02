@@ -9,5 +9,7 @@ namespace Pulse.Infrastructure.PatientDetails
         Task<PatientDetail> GetOne(string id);
 
         Task<IEnumerable<PatientDetail>> GetAll();
+
+        Task<IEnumerable<PatientDetail>> Search(string criteria);
     }
 }

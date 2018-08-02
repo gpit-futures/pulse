@@ -7,6 +7,6 @@ namespace Pulse.Web.Controllers.Search.ResponseModels
     {
         public int TotalPatients => this.Patients.Count;
 
-        public IList<Patient> Patients { get; set; } = new List<Patient>();
+        public IList<PatientDetail> Patients { get; set; } = new List<PatientDetail>();
     }
 }

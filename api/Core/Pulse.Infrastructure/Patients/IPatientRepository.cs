@@ -14,7 +14,5 @@ namespace Pulse.Infrastructure.Patients
         Task<Patient> GetOne(string id);
 
         Task AddOrUpdate(Patient item);
-
-        Task<IEnumerable<Patient>> Search(string criteria);
     }
 }

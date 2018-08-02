@@ -4,11 +4,9 @@ using Hl7.Fhir.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pulse.Infrastructure.PatientDetails;
-using Pulse.Infrastructure.Patients;
 using Pulse.Web.Controllers.Search.RequestModels;
 using Pulse.Web.Controllers.Search.ResponseModels;
 using Pulse.Web.Extensions;
-using Patient = Pulse.Domain.Patients.Entities.Patient;
 
 namespace Pulse.Web.Controllers.Search
 {
@@ -17,16 +15,12 @@ namespace Pulse.Web.Controllers.Search
     [Route("api/search")]
     public class SearchController : Controller
     {
-        public SearchController(IPatientRepository patients, 
-            IPatientDetailsRepository patientsDetail)
+        public SearchController(IPatientDetailsRepository patientsDetail)
         {
-            this.Patients = patients;
             this.PatientsDetail = patientsDetail;
 
             this.FhirSerializer = new FhirJsonSerializer(new ParserSettings{ AcceptUnknownMembers = false});
         }
-
-        private IPatientRepository Patients { get; }
 
         private IPatientDetailsRepository PatientsDetail { get; }
 
@@ -40,7 +34,7 @@ namespace Pulse.Web.Controllers.Search
                 return this.Ok(new MainSearchResponse());
             }
 
-            var patients = await this.Patients.Search(request.SearchString);
+            var patients = await this.PatientsDetail.Search(request.SearchString);
 
             if (patients == null)
             {
@@ -49,7 +43,7 @@ namespace Pulse.Web.Controllers.Search
 
             var result = new MainSearchResponse
             {
-                Patients = (IList<Patient>)patients
+                Patients = (IList<PatientDetail>)patients
             };
 
             return this.Ok(result);
