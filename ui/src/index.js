@@ -68,28 +68,18 @@ if (isElectron()) {
   console.log('is electron app')
   window.Bridge.updateTokenContext = token => {
     store.dispatch(setTokensStart(token));
-    store.dispatch(initialiseStart());
-    // render(
-    //   //Provider allows us to receive data from store of our app (by connect function)
-    //   <Provider store={store}>
-    //     <ConnectedRouter history={history}>
-    //       <Router>
-    //         <App />
-    //       </Router>
-    //     </ConnectedRouter>
-    //   </Provider>,
-    //   document.getElementById('app-root'),
-    // );
   }
-  render(
-    //Provider allows us to receive data from store of our app (by connect function)
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Router>
-          <App />
-        </Router>
-      </ConnectedRouter>
-    </Provider>,
-    document.getElementById('app-root'),
-  );
 }
+
+store.dispatch(initialiseStart());
+render(
+  //Provider allows us to receive data from store of our app (by connect function)
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Router>
+        <App />
+      </Router>
+    </ConnectedRouter>
+  </Provider>,
+  document.getElementById('app-root'),
+);
