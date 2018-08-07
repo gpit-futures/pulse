@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Pulse.Domain.Patients.Entities;
+using PatientDetailEntity = Pulse.Domain.PatientDetails.Entities.PatientDetail;
 
 namespace Pulse.Web.Controllers.Search.ResponseModels
 {
@@ -7,6 +7,6 @@ namespace Pulse.Web.Controllers.Search.ResponseModels
     {
         public int TotalPatients => this.Patients.Count;
 
-        public IList<PatientDetail> Patients { get; set; } = new List<PatientDetail>();
+        public IList<PatientDetailEntity> Patients { get; set; } = new List<PatientDetailEntity>();
     }
 }

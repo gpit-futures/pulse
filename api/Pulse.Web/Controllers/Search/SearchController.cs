@@ -7,6 +7,7 @@ using Pulse.Infrastructure.PatientDetails;
 using Pulse.Web.Controllers.Search.RequestModels;
 using Pulse.Web.Controllers.Search.ResponseModels;
 using Pulse.Web.Extensions;
+using PatientDetail = Pulse.Domain.PatientDetails.Entities.PatientDetail;
 
 namespace Pulse.Web.Controllers.Search
 {

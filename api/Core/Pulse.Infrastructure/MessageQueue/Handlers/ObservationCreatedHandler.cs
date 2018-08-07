@@ -35,6 +35,7 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
             }
 
             var value = (SimpleQuantity)obj.Value;
+            var dateTime = (FhirDateTime) obj.Effective;
 
             var clinicalNote = new ClinicalNote
             {
@@ -42,7 +43,7 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
                 Notes = $"{obj.Code.Coding[0].Display}. Value: {value.Value}. Unit: {value.Unit}.",
                 PatientId = nhsNumber,
                 Author = obj.Performer[0].Display,
-                DateCreated = obj.Meta?.LastUpdated?.DateTime ?? DateTime.UtcNow,
+                DateCreated = dateTime.ToDateTime() ?? DateTime.UtcNow,
                 Source = "INR",
                 SourceId = obj.Identifier[0].Value
             };

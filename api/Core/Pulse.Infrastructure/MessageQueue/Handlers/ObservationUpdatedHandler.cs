@@ -42,10 +42,11 @@ namespace Pulse.Infrastructure.MessageQueue.Handlers
             }
 
             var value = (SimpleQuantity)obj.Value;
+            var dateTime = (FhirDateTime)obj.Effective;
 
             observation.Author = obj.Performer[0].Display;
             observation.Notes = $"AMENDED: {obj.Code.Coding[0].Display}. Value: {value.Value}. Unit: {value.Unit}.";
-            observation.DateCreated = obj.Meta?.LastUpdated?.DateTime ?? DateTime.UtcNow;
+            observation.DateCreated = dateTime.ToDateTime() ?? DateTime.UtcNow;
 
             await this.ClinicalNotes.AddOrUpdate(observation);
         }

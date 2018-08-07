@@ -2,7 +2,7 @@ version: "3"
 services:
   pulse-web:
     build:
-      context: ./api
+      context: ./
       dockerfile: Dockerfile
     ports:
       - "3101:80"

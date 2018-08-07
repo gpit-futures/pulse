@@ -1,16 +1,16 @@
 version: "3"
 services:
-  api:
+  pulse-api:
     image: gpitfutures/pulsetile
     ports:
       - "3101:80"
     links:
-      - pulsedb
+      - pulse-db
     depends_on:
-      - pulsedb
+      - pulse-db
     networks:
-      - api_network
-  pulsedb:
+      - pulse-network
+  pulse-db:
     image: mongo:latest
     environment:
       - MONGO_DATA_DIR=/data/db
@@ -19,8 +19,8 @@ services:
       - ./data:/data
     command: mongod --smallfiles --logpath=/dev/null --quiet
     networks:
-      - api_network
+      - pulse-network
 
 networks:
-  api_network:
+  pulse-network:
     driver: bridge
