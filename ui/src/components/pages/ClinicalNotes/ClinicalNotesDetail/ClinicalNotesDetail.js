@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import PluginDetailPanel from '../../../plugin-page-component/PluginDetailPanel'
 import ClinicalNotesDetailForm from './ClinicalNotesDetailForm'
-import { getDDMMMYYYY } from '../../../../utils/time-helpers.utils';
+import { getDDMMMYYYY, getDDMMMYYYYHHMM } from '../../../../utils/time-helpers.utils';
 import { valuesNames, valuesLabels } from '../forms.config';
 
 const CLINICAL_NOTES_PANEL = 'clinicalNotesPanel';
@@ -12,7 +12,7 @@ export default class ClinicalNotesDetail extends PureComponent {
     const { onExpand, openedPanel, expandedPanel, currentPanel, onEdit, editedPanel, onCancel, onSaveSettings, clinicalNoteFormValues, isSubmit } = this.props;
     let { detail } = this.props;
     detail = detail || {};
-    const dateCreated = getDDMMMYYYY(detail[valuesNames.DATE_CREATED]);
+    const dateCreated = getDDMMMYYYYHHMM(detail[valuesNames.DATE_CREATED]);
 
     return (
       <div className="section-detail">

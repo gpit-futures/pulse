@@ -8,6 +8,10 @@ export const getDDMMMYYYY = date => (moment(date).isValid()
   ? moment(date).format('DD-MMM-YYYY')
   : date);
 
+export const getDDMMMYYYYHHMM = date => (moment(date).isValid()
+  ? moment(date).format('DD-MMM-YYYY, hh:mm')
+  : date);
+
 export const getHHmm = date => (moment(date).isValid()
   ? moment(date).format('HH:mm')
   : date);
