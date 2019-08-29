@@ -8,6 +8,9 @@ services:
       - "3101:80"
     links:
       - pulse-db
+    external_links:
+      - frame_futures-bus
+      - frame_api_network
     depends_on:
       - pulse-db
       - pulse-migrate
@@ -30,7 +33,7 @@ services:
       - MONGO_LOG_DIR=/dev/null
     volumes:
       - ./data:/data
-    command: mongod --smallfiles --logpath=/dev/null --quiet
+    command: mongod --logpath=/dev/null --quiet
     networks:
       - pulse-network
 

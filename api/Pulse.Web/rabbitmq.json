@@ -1,9 +1,9 @@
 ﻿{
     "VirtualHost": "/",
-    "Username": "core",
-    "Password": "1CORE",
+    "Username": "guest",
+    "Password": "guest",
     "Port": 5672,
-    "Hostnames": [ "ec2-35-177-15-201.eu-west-2.compute.amazonaws.com" ],
+    "Hostnames": [ "frame_futures-bus" ],
     "RequestTimeout": "00:00:10",
     "PersistentDeliveryMode": true,
     "AutoCloseConnection": true,

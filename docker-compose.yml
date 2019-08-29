@@ -17,7 +17,7 @@ services:
       - MONGO_LOG_DIR=/dev/null
     volumes:
       - ./data:/data
-    command: mongod --smallfiles --logpath=/dev/null --quiet
+    command: mongod --logpath=/dev/null --quiet
     networks:
       - pulse-network
 
