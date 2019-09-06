@@ -1,9 +1,9 @@
 ﻿{
     "VirtualHost": "/",
-    "Username": "guest",
-    "Password": "guest",
+    "Username": "core",
+    "Password": "1CORE",
     "Port": 5672,
-    "Hostnames": [ "frame_futures-bus" ],
+    "Hostnames": [ "futures-bus" ],
     "RequestTimeout": "00:00:10",
     "PersistentDeliveryMode": true,
     "AutoCloseConnection": true,

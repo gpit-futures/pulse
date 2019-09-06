@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./Core ./Core
 COPY ./Migration ./Migration
 RUN dotnet restore Migration/Pulse.Migration/Pulse.Migration.csproj
-RUN dotnet publish Migration/Pulse.Migration/Pulse.Migration.csproj -c Release -r linux-x64 -o ../../out
+RUN dotnet publish Migration/Pulse.Migration/Pulse.Migration.csproj -c Release -r linux-musl-x64 -o ../../out
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime-alpine AS runtime
 WORKDIR /app

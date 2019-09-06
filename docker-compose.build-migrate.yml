@@ -9,8 +9,7 @@ services:
     links:
       - pulse-db
     external_links:
-      - frame_futures-bus
-      - frame_api_network
+      - futures-bus
     depends_on:
       - pulse-db
       - pulse-migrate
@@ -38,5 +37,6 @@ services:
       - pulse-network
 
 networks:
-  pulse-network:
-    driver: bridge
+  pulse-network: 
+    external:
+      name: frame_api_network
