@@ -111,7 +111,7 @@
   },
   "dependencies": {
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "bootstrap-sass": "3.3.7",
     "chart.js": "2.7.0",
     "classnames": "2.2.5",
